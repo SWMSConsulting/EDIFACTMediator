@@ -10,7 +10,6 @@ namespace EDIFACTMediator
         public InterchangeTrailer Trailer { get; set; } = new InterchangeTrailer();
     }
 
-
     public class Order
     {
         public MessageHeader MessageHeader { get; set; } = new MessageHeader(); // UNH segment
