@@ -1,0 +1,18 @@
+﻿SAP B1 Order
+
+{
+    "ObjType": "17",
+    "CardCode": "10001",
+    "DocDate": "2024-09-13",
+    "DocDueDate": "2024-09-20",
+    "TaxDate": "2024-09-13",
+    "DocumentLines": [
+        {
+            "U_ItemCodeByCustomer": "07052",
+            "Quantity": "99",
+            "ItemCode": "104872"
+        }
+    ],
+    "Comments": "Bestellung für Kunde 10001 - als Entwurf gespeichert"
+}
+
