@@ -2,9 +2,8 @@
 
 namespace EDIFACTMediator
 {
-    public class OrdersD96A: IIncomingMessageFormat
+    public class OrdersD96A
     {
-
         public InterchangeHeader Header { get; set; } = new InterchangeHeader();
         public List<Order> Orders { get; set; } = new List<Order>();
         public InterchangeTrailer Trailer { get; set; } = new InterchangeTrailer();
