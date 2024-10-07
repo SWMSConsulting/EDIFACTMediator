@@ -1,5 +1,4 @@
-﻿using SWMS.EDISolution.Module.Extensions;
-using SWMS.EDISolution.Module.Mapper;
+﻿using EDIFACTMediator.Extensions;
 using System.Collections.ObjectModel;
 
 namespace EDIFACTMediator.Services;
@@ -108,14 +107,14 @@ public class FormatMapper: IFormatMapper
             return;
         }
 
-        var mappedValue = MapPropertyValue(mapping, sourceValue);
+        var mappedValue = MapPropertyValueAsync(mapping, sourceValue);
         if (mappedValue != null)
         {
             targetProperty.SetValue(target, mappedValue);
         }
     }
 
-    private object? MapPropertyValue(IPropertyMapping propertyMapping, object? sourceValue)
+    private async Task<object?> MapPropertyValueAsync(IPropertyMapping propertyMapping, object? sourceValue)
     {
         if (propertyMapping.Mapper == null)
         {
@@ -123,8 +122,11 @@ public class FormatMapper: IFormatMapper
         }
 
         var mapper = Activator.CreateInstance(propertyMapping.Mapper) as IPropertyMapper;
-        var mapped = mapper?.Map(sourceValue, propertyMapping.MapperParameters);
-        return mapped;
+        if (mapper == null)
+        {
+            return null;
+        }
+        return await mapper.Map(sourceValue, propertyMapping.MapperParameters);
     }
 
     public object? GetPropertyValue(object? source, string? propertyName)

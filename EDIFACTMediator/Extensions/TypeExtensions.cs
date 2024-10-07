@@ -1,11 +1,11 @@
-﻿namespace SWMS.EDISolution.Module.Extensions;
+﻿namespace EDIFACTMediator.Extensions;
 
 public static class TypeExtensions
 {
     public static IEnumerable<Type> GetImplementingTypes(this Type type)
     {
         var types = AppDomain.CurrentDomain.GetAssemblies()
-            .Where(a => !a.FullName.StartsWith("System"))
+            .Where(a => a.FullName != null && !a.FullName.StartsWith("System"))
             .SelectMany(s => s.GetTypes())
             .Where(p => p != null && type.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract)
             .ToList();
