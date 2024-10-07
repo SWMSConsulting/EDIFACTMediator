@@ -46,7 +46,7 @@ public class FormatMapper: IFormatMapper
     }
 
 
-    public void MapProperty(object? source, object? target, IPropertyMapping mapping)
+    public async void MapProperty(object? source, object? target, IPropertyMapping mapping)
     {
         var targetPropName = mapping.TargetProperty.Split(".").LastOrDefault();
         var targetProperty = string.IsNullOrEmpty(targetPropName) ? null : target?.GetType().GetProperty(targetPropName);
@@ -108,14 +108,14 @@ public class FormatMapper: IFormatMapper
             return;
         }
 
-        var mappedValue = MapPropertyValueAsync(mapping, sourceValue);
+        var mappedValue = MapPropertyValue(mapping, sourceValue);
         if (mappedValue != null)
         {
             targetProperty.SetValue(target, mappedValue);
         }
     }
 
-    private async Task<object?> MapPropertyValueAsync(IPropertyMapping propertyMapping, object? sourceValue)
+    private object? MapPropertyValue(IPropertyMapping propertyMapping, object? sourceValue)
     {
         if (propertyMapping.Mapper == null)
         {
@@ -127,7 +127,7 @@ public class FormatMapper: IFormatMapper
         {
             return null;
         }
-        return await mapper.Map(sourceValue, propertyMapping.MapperParameters);
+        return mapper.Map(sourceValue, propertyMapping.MapperParameters);
     }
 
     public object? GetPropertyValue(object? source, string? propertyName)
