@@ -1,4 +1,5 @@
 ﻿using EDIFACTMediator.Extensions;
+using EDIFACTMediator.PropertyMapper;
 using System.Collections.ObjectModel;
 
 namespace EDIFACTMediator.Services;
