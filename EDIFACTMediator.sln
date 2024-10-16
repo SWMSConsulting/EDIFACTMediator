@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDIFACTMediator", "EDIFACTMediator\EDIFACTMediator.csproj", "{01C4C28F-DE37-4FE2-9F5D-785F1A871498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EDIFACTMediator", "EDIFACTMediator\EDIFACTMediator.csproj", "{01C4C28F-DE37-4FE2-9F5D-785F1A871498}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{C23A31CF-1875-43A0-86F6-5CA9A100F04F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "indice.Edi", "EDI.Net\src\indice.Edi\indice.Edi.csproj", "{74E98362-98C9-4366-95B3-41ECE1291758}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{01C4C28F-DE37-4FE2-9F5D-785F1A871498}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01C4C28F-DE37-4FE2-9F5D-785F1A871498}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01C4C28F-DE37-4FE2-9F5D-785F1A871498}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C23A31CF-1875-43A0-86F6-5CA9A100F04F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C23A31CF-1875-43A0-86F6-5CA9A100F04F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C23A31CF-1875-43A0-86F6-5CA9A100F04F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C23A31CF-1875-43A0-86F6-5CA9A100F04F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74E98362-98C9-4366-95B3-41ECE1291758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E98362-98C9-4366-95B3-41ECE1291758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E98362-98C9-4366-95B3-41ECE1291758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E98362-98C9-4366-95B3-41ECE1291758}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
