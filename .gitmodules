@@ -1,0 +1,3 @@
+[submodule "EDI.Net"]
+	path = EDI.Net
+	url = https://github.com/indice-co/EDI.Net.git
