@@ -1,12 +1,46 @@
-﻿using indice.Edi.Serialization;
+﻿using EDIFACTMediator.Utils;
+using indice.Edi.Serialization;
 
 namespace EDIFACTMediator.Formats;
 
 public class OrdersD96A
 {
     public InterchangeHeader Header { get; set; } = new InterchangeHeader();
+
     public List<Order> Orders { get; set; } = new List<Order>();
+    /*
+    //Header
+    public MessageHeader MessageHeader { get; set; } = new MessageHeader(); // UNH segment
+    public BeginningOfMessage BeginningOfMessage { get; set; } = new BeginningOfMessage(); // BGM segment
+    public DateTimePeriodMessage DateTimes { get; set; } = new DateTimePeriodMessage(); // DTM segments
+    public List<PaymentInstructionMessage> PaymentInstructions { get; set; } =
+  new List<PaymentInstructionMessage>(); // PAI segments
+
+    public List<AdditionalInformationMessage> AdditionalInformations { get; set; } =
+        new List<AdditionalInformationMessage>(); // ALI segments
+
+    public List<ItemDescriptionMessage> ItemDescriptions { get; set; } =
+        new List<ItemDescriptionMessage>(); // IMD segments
+
+    public List<FreeTextMessage> FreeTexts { get; set; } = new List<FreeTextMessage>(); // FTX segments
+
+    public List<SegmentGroup2> Parties { get; set; } = new List<SegmentGroup2>();
+
+    //Add segment groups if needed (https://service.unece.org/trade/untdid/d96a/trmd/orders_d.htm#HS)
+
+
+
+
+    public List<LineItems> LineItems { get; set; } = new List<LineItems>(); // LIN-PIA-IMD-MEA-QTY-PCD-ALI-DTM-MOA-GIN-GIR-QVR-DOC-PAI-FTX-SG26-SG27-SG28-SG29-SG30-SG33-SG34-SG35-SG39-SG45-SG47-SG48-SG49-SG51-SG52 segment group
+
+    //public Order Orders { get; set; }
+    [EdiSegment(Mandatory = true)]
+    public SectionControl SectionControl { get; set; } = new SectionControl(); // UNS segment
+    public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
+    */
     public InterchangeTrailer Trailer { get; set; } = new InterchangeTrailer();
+
+
 }
 
 [EdiMessage]
@@ -15,10 +49,9 @@ public class Order
     public MessageHeader MessageHeader { get; set; } = new MessageHeader(); // UNH segment
     public BeginningOfMessage BeginningOfMessage { get; set; } = new BeginningOfMessage(); // BGM segment
     public List<DateTimePeriodMessage> DateTimes { get; set; } = new List<DateTimePeriodMessage>(); // DTM segments
-
     public List<PaymentInstructionMessage> PaymentInstructions { get; set; } =
-        new List<PaymentInstructionMessage>(); // PAI segments
-    
+  new List<PaymentInstructionMessage>(); // PAI segments
+
     public List<AdditionalInformationMessage> AdditionalInformations { get; set; } =
         new List<AdditionalInformationMessage>(); // ALI segments
 
@@ -26,31 +59,60 @@ public class Order
         new List<ItemDescriptionMessage>(); // IMD segments
 
     public List<FreeTextMessage> FreeTexts { get; set; } = new List<FreeTextMessage>(); // FTX segments
+
+    public List<SegmentGroup2> Parties { get; set; } = new List<SegmentGroup2>();
+
+    //Add segment groups if needed (https://service.unece.org/trade/untdid/d96a/trmd/orders_d.htm#HS)
+
+
+
+
+    public List<LineItemGroup> LineItems { get; set; } = new List<LineItemGroup>(); // LIN-PIA-IMD-MEA-QTY-PCD-ALI-DTM-MOA-GIN-GIR-QVR-DOC-PAI-FTX-SG26-SG27-SG28-SG29-SG30-SG33-SG34-SG35-SG39-SG45-SG47-SG48-SG49-SG51-SG52 segment group
+
+    //public Order Orders { get; set; }
+    [EdiSegment(Mandatory = true)]
+    public SectionControl SectionControl { get; set; } = new SectionControl(); // UNS segment
+    public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
+
+
     //public List<SegmentGroup1> References { get; set; } = new List<SegmentGroup1>(); // RFF-DTM segment group
 
-
-    //public List<SegmentGroup2> Parties { get; set; } = new List<SegmentGroup2>(); // NAD-LOC-FII-SG3-SG4-SG5 segment group
-    public List<NameAndAddressMessage> Parties { get; set; } = new List<NameAndAddressMessage>(); // TODO - use as group
+    //public List<SegmentGroup2> Parties { get; set; } =
+    //    new List<SegmentGroup2>(); // NAD-LOC-FII-SG3-SG4-SG5 segment group
 
     //public List<SegmentGroup6> Taxes { get; set; } = new List<SegmentGroup6>(); // TAX-MOA-LOC segment group
     //public List<SegmentGroup7> Currencies { get; set; } = new List<SegmentGroup7>(); // CUX-PCD-DTM segment group
-    //public List<SegmentGroup8> PaymentTerms { get; set; } =new List<SegmentGroup8>(); // PAT-DTM-PCD-MOA segment group
+
+    //public List<SegmentGroup8> PaymentTerms { get; set; } =
+    //    new List<SegmentGroup8>(); // PAT-DTM-PCD-MOA segment group
 
     //public List<SegmentGroup9> TransportDetails { get; set; } = new List<SegmentGroup9>(); // TDT-SG10 segment group
     //public List<SegmentGroup11> DeliveryTerms { get; set; } = new List<SegmentGroup11>(); // TOD-LOC segment group
-    //public List<SegmentGroup12> PackagingDetails { get; set; } = new List<SegmentGroup12>(); // PAC-MEA-SG13 segment group
-    //public List<SegmentGroup15> SchedulingConditions { get; set; } = new List<SegmentGroup15>(); // SCC-FTX-RFF-SG16 segment group
-    //public List<SegmentGroup17> AdditionalPrices { get; set; } = new List<SegmentGroup17>(); // APR-DTM-RNG segment group
-    //public List<SegmentGroup18> AllowancesAndCharges { get; set; } = new List<SegmentGroup18>(); // ALC-ALI-DTM-SG19-SG20-SG21-SG22-SG23 segment group
-    //public List<SegmentGroup24> Regulations { get; set; } = new List<SegmentGroup24>(); // RCS-RFF-DTM-FTX segment group
 
-    public List<SegmentGroup25> LineItems { get; set; } = new List<SegmentGroup25>(); // LIN-PIA-IMD-MEA-QTY-PCD-ALI-DTM-MOA-GIN-GIR-QVR-DOC-PAI-FTX-SG26-SG27-SG28-SG29-SG30-SG33-SG34-SG35-SG39-SG45-SG47-SG48-SG49-SG51-SG52 segment group
+    //public List<SegmentGroup12> PackagingDetails { get; set; } =
+    //    new List<SegmentGroup12>(); // PAC-MEA-SG13 segment group
 
-    //public List<SegmentGroup54> AllowanceChargeSummaries { get; set; } = new List<SegmentGroup54>(); // ALC-ALI-MOA segment group
+    //public List<SegmentGroup15> SchedulingConditions { get; set; } =
+    //    new List<SegmentGroup15>(); // SCC-FTX-RFF-SG16 segment group
+
+    //public List<SegmentGroup17> AdditionalPrices { get; set; } =
+    //    new List<SegmentGroup17>(); // APR-DTM-RNG segment group
+
+    //public List<SegmentGroup18> AllowancesAndCharges { get; set; } =
+    //    new List<SegmentGroup18>(); // ALC-ALI-DTM-SG19-SG20-SG21-SG22-SG23 segment group
+
+    //public List<SegmentGroup24> Regulations { get; set; } =
+    //    new List<SegmentGroup24>(); // RCS-RFF-DTM-FTX segment group
+
+    //public List<SegmentGroup25> LineItems { get; set; } =
+    //    new List<SegmentGroup25>(); // LIN-PIA-IMD-MEA-QTY-PCD-ALI-DTM-MOA-GIN-GIR-QVR-DOC-PAI-FTX-SG26-SG27-SG28-SG29-SG30-SG33-SG34-SG35-SG39-SG45-SG47-SG48-SG49-SG51-SG52 segment group
+
+    //public List<SegmentGroup54> AllowanceChargeSummaries { get; set; } =
+    //    new List<SegmentGroup54>(); // ALC-ALI-MOA segment group
 
     //public SectionControl SectionControl { get; set; } = new SectionControl(); // UNS segment
-    public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
-    public MessageTrailer MessageTrailer { get; set; } = new MessageTrailer(); // UNT segment
+    //public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
+    //public MessageTrailer MessageTrailer { get; set; } = new MessageTrailer(); // UNT segment
 }
 
 [EdiSegment, EdiPath("UNB")]
@@ -125,18 +187,31 @@ public class MessageHeader
     public string AssociationAsignedCode { get; set; } = "EAN005";
 }
 
-[EdiSegment, EdiPath("DTM")]
+[EdiSegment, EdiElement, EdiPath("DTM")]
 public class DateTimePeriodMessage
 {
     // DTM
     [EdiValue("X(3)", Path = "DTM/0/0", Mandatory = true)]
     public string DateTimePeriodFunctionCode { get; set; } = "137"; // 2005
 
-    [EdiValue("9(6)", Path = "DTM/0/1", Format = "yyyyMMdd", Description = "Date and Time of Preparation")]
-    public DateTime DateOfPreparation { get; set; } = DateTime.Now; // 2380
+    [EdiValue("9(6)", Path = "DTM/0/1", Description = "Date and Time of Preparation")]
+    public string DateOfPreparation { get; set; } // 2380
 
-    [EdiValue("X(3)", Path = "DTM/0/2")] 
-    public string FormatQualifier { get; set; } = "203"; // 2379
+    [EdiValue("X(3)", Path = "DTM/0/2")]
+    public string FormatQualifier { get; set; }
+
+    public DateTime DateOfPreparationDate
+    {
+        get
+        {
+
+            if (DateTime.TryParseExact(DateOfPreparation, DateTimeFormat.GetDateTimeFormat(FormatQualifier), null, System.Globalization.DateTimeStyles.None, out DateTime date))
+            {
+                return date;
+            }
+            return DateTime.MinValue;
+        }
+    }
 }
 
 
@@ -167,7 +242,7 @@ public class BeginningOfMessage
     public string ResponseTypeCoded { get; set; } // 4343 (optional, add if needed)
 }
 
-[EdiSegment, EdiPath("PAI")]
+[EdiSegment, EdiElement, EdiPath("PAI")]
 public class PaymentInstructionMessage
 {
     // PAI
@@ -190,7 +265,7 @@ public class PaymentInstructionMessage
     public string PaymentChannelCoded { get; set; } // 4435
 }
 
-[EdiSegment, EdiPath("ALI")]
+[EdiSegment, EdiElement, EdiPath("ALI")]
 public class AdditionalInformationMessage
 {
     // ALI
@@ -219,7 +294,7 @@ public class AdditionalInformationMessage
     public string SpecialConditionsCoded6 { get; set; } // 4183 (6th occurrence)
 }
 
-[EdiSegment, EdiPath("IMD")]
+[EdiSegment, EdiElement, EdiPath("IMD")]
 public class ItemDescriptionMessage
 {
     // IMD
@@ -252,7 +327,7 @@ public class ItemDescriptionMessage
     public string SurfaceLayerIndicatorCoded { get; set; } // 7383
 }
 
-[EdiSegment, EdiPath("FTX")]
+[EdiElement, EdiSegment, EdiPath("FTX")]
 public class FreeTextMessage
 {
     // FTX
@@ -317,12 +392,12 @@ public class SegmentGroup1
     [EdiValue("X(35)", Path = "SG1/1")] public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
-[EdiSegment, EdiPath("NAD")]
+[EdiSegment, EdiElement, EdiPath("NAD")]
 public class NameAndAddressMessage
 {
     [EdiValue("X(3)", Path = "NAD/0", Mandatory = true)]
     public string PartyQualifier { get; set; } // 3035
-    
+
     // C082 Composite
     [EdiValue("X(35)", Path = "NAD/1/0", Mandatory = false)]
     public string PartyIdIdentification { get; set; } // 3039
@@ -394,7 +469,7 @@ public class NameAndAddressMessage
     public string CountryCoded { get; set; } // 3207
 }
 
-[EdiSegment, EdiPath("LOC")]
+[EdiSegment, EdiElement, EdiPath("LOC")]
 public class PlaceLocationIdentificationMessage
 {
     [EdiValue("X(3)", Path = "LOC/0", Mandatory = true)]
@@ -491,7 +566,7 @@ public class FinancialInstitutionInformationMessage
     public string CountryCoded { get; set; } // 3207
 }
 
-[EdiSegment, EdiPath("DOC")]
+[EdiSegment, EdiElement, EdiPath("DOC")]
 public class DocumentMessageDetails
 {
     // C002 Composite
@@ -555,102 +630,91 @@ public class CommunicationContact
     public string CommunicationChannelQualifier { get; set; } // 3155
 }
 
-[EdiSegmentGroup("SG36", "RFF", "DTM")]
+[EdiSegmentGroup("RFF")]
 public class SegmentGroup36
 {
-    [EdiValue("X(35)", Path = "SG36/0")] public ReferenceMessage Reference { get; set; } // RFF segment
+    public ReferenceMessage Reference { get; set; } // RFF segment
 
-    [EdiValue("X(35)", Path = "SG36/1", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
-[EdiSegmentGroup("SG37", "DOC", "DTM")]
+[EdiSegmentGroup("DOC")]
 public class SegmentGroup37
 {
-    [EdiValue("X(35)", Path = "SG37/0")] public DocumentMessageDetails Document { get; set; } // DOC segment
+    public DocumentMessageDetails Document { get; set; } // DOC segment
 
-    [EdiValue("X(35)", Path = "SG37/1", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
 
-[EdiSegmentGroup("SG38", "CTA", "COM")]
+[EdiSegmentGroup("CTA", "COM")]
 public class SegmentGroup38
 {
-    [EdiValue("X(35)", Path = "SG38/0")] public ContactInformation ContactInformation { get; set; } // CTA segment
+    public ContactInformation ContactInformation { get; set; } // CTA segment
 
-    [EdiValue("X(35)", Path = "SG38/1", Mandatory = false)]
     public CommunicationContact CommunicationContact { get; set; } // COM segment
 }
 
 
-[EdiSegmentGroup("SG35", "NAD")]//, "LOC", "SG36", "SG37", "SG38")]
+[EdiSegmentGroup("NAD")]
 public class SegmentGroup35
 {
-    [EdiValue("X(35)", Path = "SG35/0")] 
     public NameAndAddressMessage NameAndAddress { get; set; } // NAD segment
 
-    /*
-    [EdiValue("X(35)", Path = "SG35/1", Mandatory = false)]
     public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
 
-    [EdiValue("X(35)", Path = "SG35/2", Mandatory = false)]
     public SegmentGroup36 ReferenceDateTimePeriod { get; set; } // SG36
 
-    [EdiValue("X(35)", Path = "SG35/3", Mandatory = false)]
     public SegmentGroup37 DocumentDateTimePeriod { get; set; } // SG37
 
-    [EdiValue("X(35)", Path = "SG35/4", Mandatory = false)]
     public SegmentGroup38 ContactCommunication { get; set; } // SG38
-    */
 }
 
-[EdiSegmentGroup("SG3", "RFF", "DTM")]
+[EdiSegmentGroup("RFF")]
 public class SegmentGroup3
 {
-    [EdiValue("X(35)", Path = "SG3/0")] public ReferenceMessage Reference { get; set; } // RFF segment
+    public ReferenceMessage Reference { get; set; } // RFF segment
 
-    [EdiValue("X(35)", Path = "SG3/1", Mandatory = false)]
+    [EdiValue(Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
-[EdiSegmentGroup("SG4", "DOC", "DTM")]
+[EdiSegmentGroup("DOC")]
 public class SegmentGroup4
 {
-    [EdiValue("X(35)", Path = "SG4/0")] public DocumentMessageDetails Document { get; set; } // DOC segment
+    public DocumentMessageDetails Document { get; set; } // DOC segment
 
-    [EdiValue("X(35)", Path = "SG4/1", Mandatory = false)]
+    [EdiValue(Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
-[EdiSegmentGroup("SG5", "CTA", "COM")]
+[EdiSegmentGroup("CTA")]
 public class SegmentGroup5
 {
-    [EdiValue("X(35)", Path = "SG5/0")] public ContactInformation ContactInformation { get; set; } // CTA segment
+    public ContactInformation ContactInformation { get; set; } // CTA segment
 
-    [EdiValue("X(35)", Path = "SG5/1", Mandatory = false)]
+    [EdiValue(Mandatory = false)]
     public CommunicationContact CommunicationContact { get; set; } // COM segment
 }
 
-[EdiSegmentGroup("SG2", "NAD", "LOC", "FII", "SG3", "SG4", "SG5")]
+[EdiSegmentGroup("NAD", SequenceEnd = "LIN")]
 public class SegmentGroup2
 {
-    [EdiValue("X(35)", Path = "SG2/0")] 
     public NameAndAddressMessage NameAndAddress { get; set; } // NAD segment
 
-    [EdiValue("X(35)", Path = "SG2/1", Mandatory = false)]
+    [EdiValue(Mandatory = false)]
     public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
 
-    [EdiValue("X(35)", Path = "SG2/2", Mandatory = false)]
+    [EdiValue(Mandatory = false)]
     public FinancialInstitutionInformationMessage FinancialInstitutionInformation { get; set; } // FII segment
 
-    [EdiValue("X(35)", Path = "SG2/3", Mandatory = false)]
+    [EdiValue(Mandatory = false)]
     public SegmentGroup3 ReferenceDateTimePeriod { get; set; } // SG3
 
-    [EdiValue("X(35)", Path = "SG2/4", Mandatory = false)]
+    [EdiValue(Mandatory = false)]
     public SegmentGroup4 DocumentDateTimePeriod { get; set; } // SG4
 
-    [EdiValue("X(35)", Path = "SG2/5", Mandatory = false)]
+    [EdiValue(Mandatory = false)]
     public SegmentGroup5 ContactCommunication { get; set; } // SG5
 }
 
@@ -715,7 +779,7 @@ public class DutyTaxFeeDetails
     public string PartyTaxIdentificationNumber { get; set; } // 3446
 }
 
-[EdiSegment, EdiPath("MOA")]
+[EdiSegment, EdiElement, EdiPath("MOA")]
 public class MonetaryAmount
 {
     // C516 Composite
@@ -783,7 +847,7 @@ public class Currencies
     public string CurrencyMarketExchangeCoded { get; set; } // 6341
 }
 
-[EdiSegment, EdiPath("PCD")]
+[EdiSegment, EdiElement, EdiPath("PCD")]
 public class PercentageDetails
 {
     // C501 Composite
@@ -1043,7 +1107,7 @@ public class Package
     public string ReturnablePackageLoadContentsCoded { get; set; } // 8393
 }
 
-[EdiSegment, EdiPath("MEA")]
+[EdiSegment, EdiElement, EdiPath("MEA")]
 public class Measurements
 {
     [EdiValue("X(3)", Path = "MEA/0", Mandatory = true)]
@@ -1133,7 +1197,7 @@ public class PackageIdentification
     public string CodeListResponsibleAgency { get; set; } // 3055
 }
 
-[EdiSegment, EdiPath("GIN")]
+[EdiSegment, EdiElement, EdiPath("GIN")]
 public class GoodsIdentityNumber
 {
     [EdiValue("X(3)", Path = "GIN/0", Mandatory = true)]
@@ -1310,7 +1374,7 @@ public class SchedulingConditions
     public string DespatchPatternTimingCoded { get; set; } // 2017
 }
 
-[EdiSegment, EdiPath("QTY")]
+[EdiSegment, EdiElement, EdiPath("QTY")]
 public class Quantity
 {
     // C186 Composite
@@ -1570,19 +1634,18 @@ public class SegmentGroup24
     public FreeTextMessage FreeText { get; set; } // FTX segment
 }
 
-[EdiSegment, EdiPath("LIN")]
+[EdiSegment, EdiElement, EdiPath("LIN")]
 public class LineItem
 {
     [EdiValue("9(6)", Path = "LIN/0", Mandatory = false)]
     public int LineItemNumber { get; set; } // 1082
-    
+
     [EdiValue("X(3)", Path = "LIN/1", Mandatory = false)]
     public string ActionRequestNotificationCoded { get; set; } // 1229
 
     // C212 Composite
     [EdiValue("X(35)", Path = "LIN/2/0", Mandatory = false)]
     public string ItemNumber { get; set; } // 7140
-    /*
 
     [EdiValue("X(3)", Path = "LIN/2/1", Mandatory = false)]
     public string ItemNumberTypeCoded { get; set; } // 7143
@@ -1605,10 +1668,9 @@ public class LineItem
 
     [EdiValue("X(3)", Path = "LIN/5", Mandatory = false)]
     public string ConfigurationCoded { get; set; } // 7083
-    */
 }
 
-[EdiSegment, EdiPath("PIA")]
+[EdiSegment, EdiElement, EdiPath("PIA")]
 public class AdditionalProductId
 {
     [EdiValue("X(3)", Path = "PIA/0", Mandatory = true)]
@@ -1621,11 +1683,20 @@ public class AdditionalProductId
     [EdiValue("X(3)", Path = "PIA/1/1", Mandatory = false)]
     public string ItemNumberTypeCoded1 { get; set; } // 7143
 
+
     [EdiValue("X(3)", Path = "PIA/1/2", Mandatory = false)]
     public string ItemNumberCodeListQualifier1 { get; set; } // 1131
 
     [EdiValue("X(3)", Path = "PIA/1/3", Mandatory = false)]
     public string ItemNumberCodeListResponsibleAgency1 { get; set; } // 3055
+
+    public string ItemNumberCodeListResponsibleAgency1Text
+    {
+        get
+        {
+            return CodeListAgency.GetCodeDescription(ItemNumberCodeListResponsibleAgency1);
+        }
+    }
 
     // Second C212 Composite
     [EdiValue("X(35)", Path = "PIA/2/0", Mandatory = false)]
@@ -1680,7 +1751,7 @@ public class AdditionalProductId
     public string ItemNumberCodeListResponsibleAgency5 { get; set; } // 3055
 }
 
-[EdiSegment, EdiPath("GIR")]
+[EdiSegment, EdiElement, EdiPath("GIR")]
 public class RelatedIdentificationNumbers
 {
     [EdiValue("X(3)", Path = "GIR/0", Mandatory = true)]
@@ -1747,7 +1818,7 @@ public class RelatedIdentificationNumbers
     public string StatusCoded6 { get; set; } // 4405
 }
 
-[EdiSegment, EdiPath("QVR")]
+[EdiSegment, EdiElement, EdiPath("QVR")]
 public class QuantityVariances
 {
     // C279 Composite
@@ -1775,117 +1846,182 @@ public class QuantityVariances
 }
 
 [EdiSegmentGroup("LIN", SequenceEnd = "PRI")]
-public class SegmentGroup25
+public class SegmentGroup25Nordwest
 {
-    [EdiSegment, EdiPath("LIN")]
     public LineItem LineItem { get; set; } // LIN segment
 
-    [EdiSegment, EdiPath("QTY")]
+    public List<AdditionalProductId> AdditionalProductId { get; set; } // PIA segment
+
+    public List<ItemDescriptionMessage> ItemDescription { get; set; } // IMD segment
+
+    //[EdiValue("X(35)", Path = "SG25/3", Mandatory = false)]
+    //public Measurements Measurements { get; set; } // MEA segment
+
     public Quantity Quantity { get; set; } // QTY segment
 
-    /*
-    [EdiValue("X(35)", Path = "SG25/1", Mandatory = false)]
-    public AdditionalProductId AdditionalProductId { get; set; } // PIA segment
-
-    [EdiValue("X(35)", Path = "SG25/2", Mandatory = false)]
-    public ItemDescriptionMessage ItemDescription { get; set; } // IMD segment
-
-    [EdiValue("X(35)", Path = "SG25/3", Mandatory = false)]
-    public Measurements Measurements { get; set; } // MEA segment
-
-    [EdiValue("X(35)", Path = "SG25/4", Mandatory = false)]
-    public Quantity Quantity { get; set; } // QTY segment
-
-    [EdiValue("X(35)", Path = "SG25/5", Mandatory = false)]
-    public PercentageDetails PercentageDetails { get; set; } // PCD segment
-
-    [EdiValue("X(35)", Path = "SG25/6", Mandatory = false)]
-    public AdditionalInformationMessage AdditionalInformation { get; set; } // ALI segment
-
-    [EdiValue("X(35)", Path = "SG25/7", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 
-    [EdiValue("X(35)", Path = "SG25/8", Mandatory = false)]
+    //[EdiValue("X(35)", Path = "SG25/8", Mandatory = false)]
+    //public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+
+    //[EdiValue("X(35)", Path = "SG25/9", Mandatory = false)]
+    //public GoodsIdentityNumber GoodsIdentityNumber { get; set; } // GIN segment
+
+    //[EdiValue("X(35)", Path = "SG25/10", Mandatory = false)]
+    //public RelatedIdentificationNumbers RelatedIdentificationNumbers { get; set; } // GIR segment
+
+    //[EdiValue("X(35)", Path = "SG25/11", Mandatory = false)]
+    //public QuantityVariances QuantityVariances { get; set; } // QVR segment
+
+    //[EdiValue("X(35)", Path = "SG25/12", Mandatory = false)]
+    //public DocumentMessageDetails DocumentMessageDetails { get; set; } // DOC segment
+
+    //[EdiValue("X(35)", Path = "SG25/13", Mandatory = false)]
+    //public PaymentInstructionMessage PaymentInstructions { get; set; } // PAI segment
+
+    //[EdiValue("X(35)", Path = "SG25/14", Mandatory = false)]
+    //public FreeTextMessage FreeText { get; set; } // FTX segment
+
+    //// Placeholder for Segment Group 26
+    //[EdiValue("X(35)", Path = "SG25/15", Mandatory = false)]
+    //public SegmentGroup26 ProductCharacteristics { get; set; }
+
+    //// Placeholder for Segment Group 27
+    //[EdiValue("X(35)", Path = "SG25/16", Mandatory = false)]
+    //public SegmentGroup27 TermsOfPayment { get; set; }
+
+    //// Placeholder for Segment Group 28
+    //[EdiValue("X(35)", Path = "SG25/17", Mandatory = false)]
+    //public SegmentGroup28 RelevantPricingInformation { get; set; }
+
+    //// Placeholder for Segment Group 29
+    //[EdiValue("X(35)", Path = "SG25/18", Mandatory = false)]
+    //public SegmentGroup29 References { get; set; }
+
+    //// Placeholder for Segment Group 30
+    //[EdiValue("X(35)", Path = "SG25/19", Mandatory = false)]
+    //public SegmentGroup30 Packaging { get; set; }
+
+    //// Placeholder for Segment Group 33
+    //[EdiValue("X(35)", Path = "SG25/20", Mandatory = false)]
+    //public SegmentGroup33 DestinationDetails { get; set; }
+
+    //// Placeholder for Segment Group 34
+    //[EdiValue("X(35)", Path = "SG25/21", Mandatory = false)]
+    //public SegmentGroup34 TaxInformation { get; set; }
+
+    //// Placeholder for Segment Group 35
+    //[EdiValue("X(35)", Path = "SG25/22", Mandatory = false)]
+    //public SegmentGroup35 PartiesDetails { get; set; }
+
+    //// Placeholder for Segment Group 39
+    //[EdiValue("X(35)", Path = "SG25/23", Mandatory = false)]
+    //public SegmentGroup39 AllowancesCharges { get; set; }
+
+    //// Placeholder for Segment Group 45
+    //[EdiValue("X(35)", Path = "SG25/24", Mandatory = false)]
+    //public SegmentGroup45 SegmentGroup45 { get; set; }
+
+    //// Placeholder for Segment Group 47
+    //[EdiValue("X(35)", Path = "SG25/25", Mandatory = false)]
+    //public SegmentGroup47 SegmentGroup47 { get; set; }
+
+    //// Placeholder for Segment Group 48
+    //[EdiValue("X(35)", Path = "SG25/26", Mandatory = false)]
+    //public SegmentGroup48 SegmentGroup48 { get; set; }
+
+    //// Placeholder for Segment Group 49
+    //[EdiValue("X(35)", Path = "SG25/27", Mandatory = false)]
+    //public SegmentGroup49 SegmentGroup49 { get; set; }
+
+    //// Placeholder for Segment Group 51
+    //[EdiValue("X(35)", Path = "SG25/28", Mandatory = false)]
+    //public SegmentGroup51 SegmentGroup51 { get; set; }
+
+    //// Placeholder for Segment Group 52
+    //[EdiValue("X(35)", Path = "SG25/29", Mandatory = false)]
+    //public SegmentGroup52 SegmentGroup52 { get; set; }
+
+    public PriceDetails PriceDetails { get; set; }
+}
+
+[EdiSegmentGroup("LIN", SequenceEnd = "UNS")]
+public class LineItemGroup
+{
+    public LineItem LineItem { get; set; } // LIN segment
+
+    public List<AdditionalProductId> AdditionalProductIds { get; set; } // PIA segment
+
+    public List<ItemDescriptionMessage> ItemDescriptions { get; set; } // IMD segment
+
+    public Measurements Measurements { get; set; } // MEA segment
+
+    public Quantity Quantity { get; set; } // QTY segment
+
+    public PercentageDetails PercentageDetails { get; set; } // PCD segment
+
+    public AdditionalInformationMessage AdditionalInformation { get; set; } // ALI segment
+
+    public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
+
     public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
 
-    [EdiValue("X(35)", Path = "SG25/9", Mandatory = false)]
     public GoodsIdentityNumber GoodsIdentityNumber { get; set; } // GIN segment
 
-    [EdiValue("X(35)", Path = "SG25/10", Mandatory = false)]
     public RelatedIdentificationNumbers RelatedIdentificationNumbers { get; set; } // GIR segment
 
-    [EdiValue("X(35)", Path = "SG25/11", Mandatory = false)]
     public QuantityVariances QuantityVariances { get; set; } // QVR segment
 
-    [EdiValue("X(35)", Path = "SG25/12", Mandatory = false)]
     public DocumentMessageDetails DocumentMessageDetails { get; set; } // DOC segment
 
-    [EdiValue("X(35)", Path = "SG25/13", Mandatory = false)]
     public PaymentInstructionMessage PaymentInstructions { get; set; } // PAI segment
 
-    [EdiValue("X(35)", Path = "SG25/14", Mandatory = false)]
     public FreeTextMessage FreeText { get; set; } // FTX segment
 
-    // Placeholder for Segment Group 26
-    [EdiValue("X(35)", Path = "SG25/15", Mandatory = false)]
     public SegmentGroup26 ProductCharacteristics { get; set; }
 
     // Placeholder for Segment Group 27
-    [EdiValue("X(35)", Path = "SG25/16", Mandatory = false)]
     public SegmentGroup27 TermsOfPayment { get; set; }
 
     // Placeholder for Segment Group 28
-    [EdiValue("X(35)", Path = "SG25/17", Mandatory = false)]
-    public SegmentGroup28 RelevantPricingInformation { get; set; }
+    //public PriceDetails PriceDetails { get; set; } // PRI segment
+
+    public RelevantPriceInformation RelevantPricingInformation { get; set; }
 
     // Placeholder for Segment Group 29
-    [EdiValue("X(35)", Path = "SG25/18", Mandatory = false)]
-    public SegmentGroup29 References { get; set; }
+    //public SegmentGroup29 References { get; set; }
 
-    // Placeholder for Segment Group 30
-    [EdiValue("X(35)", Path = "SG25/19", Mandatory = false)]
-    public SegmentGroup30 Packaging { get; set; }
+    //// Placeholder for Segment Group 30
+    //public SegmentGroup30 Packaging { get; set; }
 
-    // Placeholder for Segment Group 33
-    [EdiValue("X(35)", Path = "SG25/20", Mandatory = false)]
-    public SegmentGroup33 DestinationDetails { get; set; }
+    //// Placeholder for Segment Group 33
+    //public SegmentGroup33 DestinationDetails { get; set; }
 
-    // Placeholder for Segment Group 34
-    [EdiValue("X(35)", Path = "SG25/21", Mandatory = false)]
-    public SegmentGroup34 TaxInformation { get; set; }
+    //// Placeholder for Segment Group 34
+    //public SegmentGroup34 TaxInformation { get; set; }
 
-    // Placeholder for Segment Group 35
-    [EdiValue("X(35)", Path = "SG25/22", Mandatory = false)]
-    public SegmentGroup35 PartiesDetails { get; set; }
+    //// Placeholder for Segment Group 35
+    //public SegmentGroup35 PartiesDetails { get; set; }
 
     // Placeholder for Segment Group 39
-    [EdiValue("X(35)", Path = "SG25/23", Mandatory = false)]
-    public SegmentGroup39 AllowancesCharges { get; set; }
+    //public SegmentGroup39 AllowancesCharges { get; set; }
 
-    // Placeholder for Segment Group 45
-    [EdiValue("X(35)", Path = "SG25/24", Mandatory = false)]
-    public SegmentGroup45 SegmentGroup45 { get; set; }
+    //public SegmentGroup45 SegmentGroup45 { get; set; }
 
     // Placeholder for Segment Group 47
-    [EdiValue("X(35)", Path = "SG25/25", Mandatory = false)]
-    public SegmentGroup47 SegmentGroup47 { get; set; }
+    // public SegmentGroup47 SegmentGroup47 { get; set; }
 
     // Placeholder for Segment Group 48
-    [EdiValue("X(35)", Path = "SG25/26", Mandatory = false)]
-    public SegmentGroup48 SegmentGroup48 { get; set; }
+    //public SegmentGroup48 SegmentGroup48 { get; set; }
 
-    // Placeholder for Segment Group 49
-    [EdiValue("X(35)", Path = "SG25/27", Mandatory = false)]
-    public SegmentGroup49 SegmentGroup49 { get; set; }
+    //// Placeholder for Segment Group 49
+    //public SegmentGroup49 SegmentGroup49 { get; set; }
 
-    // Placeholder for Segment Group 51
-    [EdiValue("X(35)", Path = "SG25/28", Mandatory = false)]
-    public SegmentGroup51 SegmentGroup51 { get; set; }
+    //// Placeholder for Segment Group 51
+    //public SegmentGroup51 SegmentGroup51 { get; set; }
 
-    // Placeholder for Segment Group 52
-    [EdiValue("X(35)", Path = "SG25/29", Mandatory = false)]
-    public SegmentGroup52 SegmentGroup52 { get; set; }
-    */
+    //// Placeholder for Segment Group 52
+    //public SegmentGroup52 SegmentGroup52 { get; set; }
 }
 
 [EdiSegment, EdiPath("CCI")]
@@ -1944,35 +2080,29 @@ public class CharacteristicValue
     public string CharacteristicValue2 { get; set; } // 7110
 }
 
-[EdiSegmentGroup("SG26", "CCI", "CAV", "MEA")]
+[EdiSegmentGroup("CCI")]
 public class SegmentGroup26
 {
-    [EdiValue("X(35)", Path = "SG26/0")]
     public CharacteristicClassId CharacteristicClassId { get; set; } // CCI segment
 
-    [EdiValue("X(35)", Path = "SG26/1", Mandatory = false)]
     public CharacteristicValue CharacteristicValue { get; set; } // CAV segment
 
-    [EdiValue("X(35)", Path = "SG26/2", Mandatory = false)]
     public Measurements Measurements { get; set; } // MEA segment
 }
 
-[EdiSegmentGroup("SG27", "PAT", "DTM", "PCD", "MOA")]
+[EdiSegmentGroup("PAT")]
 public class SegmentGroup27
 {
-    [EdiValue("X(35)", Path = "SG27/0")] public PaymentTermsBasis PaymentTermsBasis { get; set; } // PAT segment
+    public PaymentTermsBasis PaymentTermsBasis { get; set; } // PAT segment
 
-    [EdiValue("X(35)", Path = "SG27/1", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 
-    [EdiValue("X(35)", Path = "SG27/2", Mandatory = false)]
     public PercentageDetails PercentageDetails { get; set; } // PCD segment
 
-    [EdiValue("X(35)", Path = "SG27/3", Mandatory = false)]
     public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
 }
 
-[EdiSegment, EdiPath("PRI")]
+[EdiSegment, EdiElement, EdiPath("PRI")]
 public class PriceDetails
 {
     // C509 Composite
@@ -1998,137 +2128,106 @@ public class PriceDetails
     public string SubLinePriceChangeCoded { get; set; } // 5213
 }
 
-[EdiSegmentGroup("SG28", "PRI", "CUX", "APR", "RNG", "DTM")]
-public class SegmentGroup28
+[EdiSegmentGroup("PRI", SequenceEnd = "DTM")]
+public class RelevantPriceInformation
 {
-    [EdiValue("X(35)", Path = "SG28/0")] public PriceDetails PriceDetails { get; set; } // PRI segment
+    public PriceDetails PriceDetails { get; set; } // PRI segment
 
-    [EdiValue("X(35)", Path = "SG28/1", Mandatory = false)]
     public Currencies Currencies { get; set; } // CUX segment
 
-    [EdiValue("X(35)", Path = "SG28/2", Mandatory = false)]
     public AdditionalPriceInformation AdditionalPriceInformation { get; set; } // APR segment
 
-    [EdiValue("X(35)", Path = "SG28/3", Mandatory = false)]
     public RangeDetails RangeDetails { get; set; } // RNG segment
 
-    [EdiValue("X(35)", Path = "SG28/4", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
-[EdiSegmentGroup("SG29", "RFF", "DTM")]
+[EdiSegmentGroup("RFF")]
 public class SegmentGroup29
 {
-    [EdiValue("X(35)", Path = "SG29/0")] public ReferenceMessage Reference { get; set; } // RFF segment
-
-    [EdiValue("X(35)", Path = "SG29/1", Mandatory = false)]
-    public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
-}
-
-[EdiSegmentGroup("SG31", "RFF", "DTM")]
-public class SegmentGroup31
-{
-    [EdiValue("X(35)", Path = "SG31/0")] public ReferenceMessage Reference { get; set; } // RFF segment
-
-    [EdiValue("X(35)", Path = "SG31/1", Mandatory = false)]
-    public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
-}
-
-[EdiSegmentGroup("SG32", "PCI", "RFF", "DTM", "GIN")]
-public class SegmentGroup32
-{
-    [EdiValue("X(35)", Path = "SG32/0")]
-    public PackageIdentification PackageIdentification { get; set; } // PCI segment
-
-    [EdiValue("X(35)", Path = "SG32/1", Mandatory = false)]
     public ReferenceMessage Reference { get; set; } // RFF segment
 
-    [EdiValue("X(35)", Path = "SG32/2", Mandatory = false)]
+    public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
+}
+
+
+[EdiSegmentGroup("PCI")]
+public class SegmentGroup32
+{
+    public PackageIdentification PackageIdentification { get; set; } // PCI segment
+
+    public ReferenceMessage Reference { get; set; } // RFF segment
+
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 
-    [EdiValue("X(35)", Path = "SG32/3", Mandatory = false)]
     public GoodsIdentityNumber GoodsIdentityNumber { get; set; } // GIN segment
 }
 
-[EdiSegmentGroup("SG30", "PAC", "MEA", "QTY", "DTM", "SG31", "SG32")]
+[EdiSegmentGroup("PAC")]
 public class SegmentGroup30
 {
-    [EdiValue("X(35)", Path = "SG30/0")] public Package Package { get; set; } // PAC segment
+    public Package Package { get; set; } // PAC segment
 
-    [EdiValue("X(35)", Path = "SG30/1", Mandatory = false)]
     public Measurements Measurements { get; set; } // MEA segment
 
-    [EdiValue("X(35)", Path = "SG30/2", Mandatory = false)]
     public Quantity Quantity { get; set; } // QTY segment
 
-    [EdiValue("X(35)", Path = "SG30/3", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 
-    [EdiValue("X(35)", Path = "SG30/4", Mandatory = false)]
-    public SegmentGroup31 SegmentGroup31 { get; set; }
+    public SegmentGroup29 SegmentGroup29 { get; set; }
 
-    [EdiValue("X(35)", Path = "SG30/5", Mandatory = false)]
     public SegmentGroup32 SegmentGroup32 { get; set; } // SG32 segment group
 }
 
-[EdiSegmentGroup("SG33", "LOC", "QTY", "DTM")]
+[EdiSegmentGroup("LOC")]
 public class SegmentGroup33
 {
-    [EdiValue("X(35)", Path = "SG33/0")]
     public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
 
-    [EdiValue("X(35)", Path = "SG33/1", Mandatory = false)]
     public Quantity Quantity { get; set; } // QTY segment
 
-    [EdiValue("X(35)", Path = "SG33/2", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
-[EdiSegmentGroup("SG34", "TAX", "MOA", "LOC")]
+[EdiSegmentGroup("TAX")]
 public class SegmentGroup34
 {
-    [EdiValue("X(35)", Path = "SG34/0")] public DutyTaxFeeDetails DutyTaxFeeDetails { get; set; } // TAX segment
+    public DutyTaxFeeDetails DutyTaxFeeDetails { get; set; } // TAX segment
 
-    [EdiValue("X(35)", Path = "SG34/1", Mandatory = false)]
     public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
 
-    [EdiValue("X(35)", Path = "SG34/2", Mandatory = false)]
     public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
 }
 
-[EdiSegmentGroup("SG40", "QTY", "RNG")]
+[EdiSegmentGroup("QTY")]
 public class SegmentGroup40
 {
-    [EdiValue("X(35)", Path = "SG40/0")] public Quantity Quantity { get; set; } // QTY segment
+    public Quantity Quantity { get; set; } // QTY segment
 
-    [EdiValue("X(35)", Path = "SG40/1", Mandatory = false)]
     public RangeDetails RangeDetails { get; set; } // RNG segment
 }
 
-[EdiSegmentGroup("SG41", "PCD", "RNG")]
+[EdiSegmentGroup("PCD")]
 public class SegmentGroup41
 {
-    [EdiValue("X(35)", Path = "SG41/0")] public PercentageDetails PercentageDetails { get; set; } // PCD segment
+    public PercentageDetails PercentageDetails { get; set; } // PCD segment
 
-    [EdiValue("X(35)", Path = "SG41/1", Mandatory = false)]
     public RangeDetails RangeDetails { get; set; } // RNG segment
 }
 
-[EdiSegmentGroup("SG42", "MOA", "RNG")]
+[EdiSegmentGroup("MOA")]
 public class SegmentGroup42
 {
-    [EdiValue("X(35)", Path = "SG42/0")] public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
 
-    [EdiValue("X(35)", Path = "SG42/1", Mandatory = false)]
     public RangeDetails RangeDetails { get; set; } // RNG segment
 }
 
-[EdiSegmentGroup("SG43", "RTE", "RNG")]
+[EdiSegmentGroup("RTE")]
 public class SegmentGroup43
 {
-    [EdiValue("X(35)", Path = "SG43/0")] public RateDetails RateDetails { get; set; } // RTE segment
+    public RateDetails RateDetails { get; set; } // RTE segment
 
-    [EdiValue("X(35)", Path = "SG43/1", Mandatory = false)]
     public RangeDetails RangeDetails { get; set; } // RNG segment
 }
 
@@ -2141,7 +2240,7 @@ public class SegmentGroup44
     public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
 }
 
-[EdiSegmentGroup("SG39", "ALC", "ALI", "DTM", "SG40", "SG41", "SG42", "SG43", "SG44")]
+[EdiSegmentGroup("ALC")]
 public class SegmentGroup39
 {
     [EdiValue("X(35)", Path = "SG39/0")] public AllowanceOrCharge AllowanceOrCharge { get; set; } // ALC segment
@@ -2168,88 +2267,71 @@ public class SegmentGroup39
     public SegmentGroup44 TaxMonetaryGroup { get; set; } // SG44 segment group
 }
 
-[EdiSegmentGroup("SG46", "LOC", "DTM")]
+[EdiSegmentGroup("LOC")]
 public class SegmentGroup46
 {
-    [EdiValue("X(35)", Path = "SG46/0")]
     public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
 
-    [EdiValue("X(35)", Path = "SG46/1", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
-[EdiSegmentGroup("SG45", "TDT", "SG46")]
+[EdiSegmentGroup("TDT")]
 public class SegmentGroup45
 {
-    [EdiValue("X(35)", Path = "SG45/0")] public DetailsOfTransport DetailsOfTransport { get; set; } // TDT segment
+    public DetailsOfTransport DetailsOfTransport { get; set; } // TDT segment
 
-    [EdiValue("X(35)", Path = "SG45/1", Mandatory = false)]
     public SegmentGroup46 SegmentGroup46 { get; set; } // SG46 segment group
 }
 
-[EdiSegmentGroup("SG47", "TOD", "LOC")]
+[EdiSegmentGroup("TOD")]
 public class SegmentGroup47
 {
-    [EdiValue("X(35)", Path = "SG47/0")]
     public TermsOfDeliveryOrTransport TermsOfDeliveryOrTransport { get; set; } // TOD segment
 
-    [EdiValue("X(35)", Path = "SG47/1", Mandatory = false)]
     public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
 }
 
-[EdiSegmentGroup("SG48", "EQD", "HAN", "MEA", "FTX")]
+[EdiSegmentGroup("EQD")]
 public class SegmentGroup48
 {
-    [EdiValue("X(35)", Path = "SG48/0")] public EquipmentDetails EquipmentDetails { get; set; } // EQD segment
+    public EquipmentDetails EquipmentDetails { get; set; } // EQD segment
 
-    [EdiValue("X(35)", Path = "SG48/1", Mandatory = false)]
     public HandlingInstructions HandlingInstructions { get; set; } // HAN segment
 
-    [EdiValue("X(35)", Path = "SG48/2", Mandatory = false)]
     public Measurements Measurements { get; set; } // MEA segment
 
-    [EdiValue("X(35)", Path = "SG48/3", Mandatory = false)]
     public FreeTextMessage FreeText { get; set; } // FTX segment
 }
 
-[EdiSegmentGroup("SG50", "QTY", "DTM")]
+[EdiSegmentGroup("QTY")]
 public class SegmentGroup50
 {
-    [EdiValue("X(35)", Path = "SG50/0")] public Quantity Quantity { get; set; } // QTY segment
+    public Quantity Quantity { get; set; } // QTY segment
 
-    [EdiValue("X(35)", Path = "SG50/1", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
-[EdiSegmentGroup("SG49", "SCC", "FTX", "RFF", "SG50")]
+[EdiSegmentGroup("SCC")]
 public class SegmentGroup49
 {
-    [EdiValue("X(35)", Path = "SG49/0")]
     public SchedulingConditions SchedulingConditions { get; set; } // SCC segment
 
-    [EdiValue("X(35)", Path = "SG49/1", Mandatory = false)]
     public FreeTextMessage FreeText { get; set; } // FTX segment
 
-    [EdiValue("X(35)", Path = "SG49/2", Mandatory = false)]
     public ReferenceMessage Reference { get; set; } // RFF segment
 
-    [EdiValue("X(35)", Path = "SG49/3", Mandatory = false)]
     public SegmentGroup50 SegmentGroup50 { get; set; } // SG50 segment group
 }
 
-[EdiSegmentGroup("SG51", "RCS", "RFF", "DTM", "FTX")]
+[EdiSegmentGroup("RCS")]
 public class SegmentGroup51
 {
-    [EdiValue("X(35)", Path = "SG51/0")]
     public RequirementsAndConditions RequirementsAndConditions { get; set; } // RCS segment
 
-    [EdiValue("X(35)", Path = "SG51/1", Mandatory = false)]
     public ReferenceMessage Reference { get; set; } // RFF segment
 
-    [EdiValue("X(35)", Path = "SG51/2", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 
-    [EdiValue("X(35)", Path = "SG51/3", Mandatory = false)]
     public FreeTextMessage FreeText { get; set; } // FTX segment
 }
 
@@ -2266,32 +2348,28 @@ public class Stages
     public int? ActualStageCount { get; set; } // 6428
 }
 
-[EdiSegmentGroup("SG53", "QTY", "MOA")]
+[EdiSegmentGroup("QTY", SequenceEnd = "MOA")]
 public class SegmentGroup53
 {
-    [EdiValue("X(35)", Path = "SG53/0")] public Quantity Quantity { get; set; } // QTY segment
-
-    [EdiValue("X(35)", Path = "SG53/1", Mandatory = false)]
+    public Quantity Quantity { get; set; } // QTY segment
     public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
 }
 
-[EdiSegmentGroup("SG52", "STG", "SG53")]
+[EdiSegmentGroup("STG")]
 public class SegmentGroup52
 {
-    [EdiValue("X(35)", Path = "SG52/0")] public Stages Stages { get; set; } // STG segment
-
-    [EdiValue("X(35)", Path = "SG52/1", Mandatory = false)]
+    public Stages Stages { get; set; } // STG segment
     public SegmentGroup53 QuantityMonetaryGroup { get; set; } // SG53 segment group
 }
 
-[EdiSegment, EdiPath("UNS")]
+[EdiElement, EdiPath("UNS")]
 public class SectionControl
 {
-    [EdiValue("A(1)", Path = "UNS/0", Mandatory = true)]
-    public char SectionIdentification { get; set; } // 0081
+    [EdiValue("X(1)", Path = "UNS/0", Mandatory = true)]
+    public string SectionIdentification { get; set; } // 0081
 }
 
-[EdiSegment, EdiPath("CNT")]
+[EdiElement, EdiPath("CNT")]
 public class ControlTotal
 {
     // C270 Composite
@@ -2320,7 +2398,7 @@ public class SegmentGroup54
 [EdiSegment, EdiPath("UNT")]
 public class MessageTrailer
 {
-    [EdiValue("9(1)", Path = "UNT/0", Mandatory = true)]
+    [EdiValue("9(6)", Path = "UNT/0", Mandatory = true)]
     public int NumberOfSegments { get; set; } // 0074
 
     [EdiValue("X(14)", Path = "UNT/1", Mandatory = true)]
