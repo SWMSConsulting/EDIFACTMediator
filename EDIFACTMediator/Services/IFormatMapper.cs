@@ -6,7 +6,5 @@ public interface IFormatMapper
 
     public IList<Type> TargetFormats { get; }
 
-    public object? Map(IFormatMapping formatMapping, object? source);
-    
-    public void Map(IFormatMapping formatMapping, object? source, out object? target);
+    public Task<object?> Map(IFormatMapping formatMapping, object? source);
 }
