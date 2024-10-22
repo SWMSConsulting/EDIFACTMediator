@@ -31,7 +31,7 @@ public class FormatMapper: IFormatMapper
         return this;
     }
 
-    public async Task<object?> Map(IFormatMapping formatMapping, object? source)
+    public object? Map(IFormatMapping formatMapping, object? source)
     {
         var target = Activator.CreateInstance(formatMapping.TargetFormat);
         var baseProperties = formatMapping.PropertyMapping.Where(m => m.BaseMapping == null).ToList();
@@ -121,7 +121,7 @@ public class FormatMapper: IFormatMapper
         {
             return null;
         }
-        return await mapper.Map(sourceValue, propertyMapping.MapperParameters);
+        return mapper.Map(sourceValue, propertyMapping.MapperParameters);
     }
 
     public object? GetPropertyValue(object? source, string? propertyName)
