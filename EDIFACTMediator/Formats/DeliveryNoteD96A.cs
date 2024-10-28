@@ -5,7 +5,7 @@ using indice.Edi.Serialization;
 namespace EDIFACTMediator.Formats.DeliveryNoteD96A
 {
 
-    public class DeliveryNoteD96A
+    public class DeliveryNoteD96A : IEdiFormat
     {
         public InterchangeHeader Header { get; set; } = new InterchangeHeader();
 

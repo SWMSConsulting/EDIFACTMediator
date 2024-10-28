@@ -4,7 +4,7 @@ using indice.Edi.Serialization;
 
 namespace EDIFACTMediator.Formats.InvoiceD96A;
 
-public class InvoiceD96A
+public class InvoiceD96A : IEdiFormat
 {
     public InterchangeHeader Header { get; set; } = new InterchangeHeader();
 

@@ -3,7 +3,7 @@ using indice.Edi.Serialization;
 
 namespace EDIFACTMediator.Formats.OrdersD96A;
 
-public class OrdersD96A
+public class OrdersD96A : IEdiFormat
 {
     public InterchangeHeader Header { get; set; } = new InterchangeHeader();
 
