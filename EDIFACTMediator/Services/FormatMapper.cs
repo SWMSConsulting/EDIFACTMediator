@@ -59,6 +59,10 @@ public class FormatMapper: IFormatMapper
         }
 
         var sourceValue = GetPropertyValue(source, sourcePropName);
+        if(basePropName == sourcePropName)
+        {
+            sourceValue = source;
+        }
         var sourceType = sourceValue?.GetType();
 
         if (targetProperty.PropertyType.IsListType())
@@ -68,6 +72,11 @@ public class FormatMapper: IFormatMapper
 
             if (sourceType == null || !sourceType.IsListType())
             {
+                var mapped = await MapPropertyValue(mapping, sourceValue);
+                if (mapped != null && mapped.GetType().IsAssignableTo(targetProperty.PropertyType))
+                {
+                    targetProperty.SetValue(target, mapped);
+                }
                 Console.WriteLine("Source property is not a list or null");
                 return;
             }

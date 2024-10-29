@@ -29,9 +29,9 @@ public class OrderResponse
     public List<LineItemGroup> LineItems { get; set; } = new List<LineItemGroup>(); // LIN+ groups (line items)
 
     //[EdiSegment(Mandatory = true)]
-    public SectionControl? SectionControl { get; set; } = new SectionControl(); // UNS segment
+    public SectionControl? SectionControl { get; set; } = null; // UNS segment
 
-    public ControlTotal? ControlTotal { get; set; } = new ControlTotal(); // CNT segment
+    public ControlTotal? ControlTotal { get; set; } = null;  // CNT segment
 
     public MessageTrailer MessageTrailer { get; set; } = new MessageTrailer(); // UNT segment
 }

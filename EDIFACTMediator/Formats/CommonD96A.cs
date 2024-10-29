@@ -253,7 +253,7 @@ namespace EDIFACTMediator.Formats
         public decimal QuantityValue { get; set; } // 6060
 
         [EdiValue("X(3)", Path = "QTY/0/2", Mandatory = false)]
-        public string MeasureUnitQualifier { get; set; } // 6411
+        public string? MeasureUnitQualifier { get; set; } // 6411
     }
 
     [EdiSegment, EdiPath("PAC")]
