@@ -12,6 +12,11 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
         public List<Delivery> Deliveries { get; set; } = new List<Delivery>();
 
         public InterchangeTrailer Trailer { get; set; } = new InterchangeTrailer();
+
+        public void UpdateDerivedProperties()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [EdiMessage]

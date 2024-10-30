@@ -40,7 +40,10 @@ public class OrdersD96A : IEdiFormat
     */
     public InterchangeTrailer Trailer { get; set; } = new InterchangeTrailer();
 
-
+    public void UpdateDerivedProperties()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 [EdiMessage]

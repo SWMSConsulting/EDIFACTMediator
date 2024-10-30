@@ -9,6 +9,21 @@ public class OrderResponseD96A : IEdiFormat
     public List<OrderResponse> OrderResponses { get; set; } = new List<OrderResponse>();
 
     public InterchangeTrailer Trailer { get; set; } = new InterchangeTrailer();
+
+    public void UpdateDerivedProperties()
+    {
+        foreach (var item in OrderResponses)
+        {
+            item.ControlTotal = new ControlTotal
+            {
+                ControlQualifier = "2",
+                ControlValue = item.LineItems.Count,
+            };
+            item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
+        }
+
+        Trailer.InterchangeControlCount = OrderResponses.Count;
+    }
 }
 
 [EdiMessage]

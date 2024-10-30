@@ -2,4 +2,5 @@
 
 public interface IEdiFormat
 {
+    public void UpdateDerivedProperties();
 }

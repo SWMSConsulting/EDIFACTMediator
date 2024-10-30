@@ -313,6 +313,7 @@ namespace EDIFACTMediator.Formats
     public class MessageTrailer
     {
         [EdiValue("9(6)", Path = "UNT/0", Mandatory = true)]
+        [EdiCount(EdiCountScope.Segments)]
         public int? NumberOfSegments { get; set; } // 0074
 
         [EdiValue("X(14)", Path = "UNT/1", Mandatory = true)]

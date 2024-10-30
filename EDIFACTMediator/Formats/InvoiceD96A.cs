@@ -11,6 +11,11 @@ public class InvoiceD96A : IEdiFormat
     public List<Invoice> Invoices { get; set; } = new List<Invoice>();
 
     public InterchangeTrailer Trailer { get; set; } = new InterchangeTrailer();
+
+    public void UpdateDerivedProperties()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 [EdiMessage]

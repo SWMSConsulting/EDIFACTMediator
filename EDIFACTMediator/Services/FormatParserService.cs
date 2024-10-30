@@ -46,6 +46,8 @@ public static class FormatParserService
 
         if (type.IsAssignableTo(typeof(IEdiFormat)))
         {
+            (toSerialize as IEdiFormat)?.UpdateDerivedProperties();
+
             var grammar = EdiGrammar.NewEdiFact();
             using var textWriter = new StringWriter();
             using var ediWriter = new EdiTextWriter(textWriter, grammar);
