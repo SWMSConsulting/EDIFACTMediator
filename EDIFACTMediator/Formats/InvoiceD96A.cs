@@ -14,7 +14,24 @@ public class InvoiceD96A : IEdiFormat
 
     public void UpdateDerivedProperties()
     {
-        throw new NotImplementedException();
+        Header.ControlRef = "1";
+        Header.SyntaxIdentifier = "UNOC";
+        Header.SyntaxVersion = 3;
+
+        foreach (var item in Invoices)
+        {
+            item.MessageHeader.MessageTypeIdentifier = "INVOIC";
+
+            item.ControlTotal = new ControlTotal
+            {
+                ControlQualifier = "2",
+                ControlValue = item.LineItems.Count,
+            };
+
+            item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
+        }
+
+        Trailer.InterchangeControlCount = Invoices.Count;
     }
 }
 

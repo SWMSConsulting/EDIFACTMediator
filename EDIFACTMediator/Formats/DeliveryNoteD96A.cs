@@ -1,4 +1,5 @@
 ﻿using EDIFACTMediator.Formats;
+using EDIFACTMediator.Formats.OrderResponseD96A;
 using EDIFACTMediator.Utils;
 using indice.Edi.Serialization;
 
@@ -15,7 +16,21 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
 
         public void UpdateDerivedProperties()
         {
-            throw new NotImplementedException();
+            Header.ControlRef = "1";
+            Header.SyntaxIdentifier = "DESADV";
+            Header.SyntaxVersion = 3;
+
+            foreach (var item in Deliveries)
+            {
+                item.ControlTotal = new ControlTotal
+                {
+                    ControlQualifier = "2",
+                    ControlValue = item.LineItems.Count,
+                };
+                item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
+            }
+
+            Trailer.InterchangeControlCount = Deliveries.Count;
         }
     }
 

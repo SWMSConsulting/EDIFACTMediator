@@ -12,8 +12,14 @@ public class OrderResponseD96A : IEdiFormat
 
     public void UpdateDerivedProperties()
     {
+        Header.ControlRef = "1";
+        Header.SyntaxIdentifier = "UNOC";
+        Header.SyntaxVersion = 3;
+
         foreach (var item in OrderResponses)
         {
+            item.MessageHeader.MessageTypeIdentifier = "ORDRSP";
+
             item.ControlTotal = new ControlTotal
             {
                 ControlQualifier = "2",
