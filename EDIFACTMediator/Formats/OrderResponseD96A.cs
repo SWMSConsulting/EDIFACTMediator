@@ -1,4 +1,5 @@
-﻿using indice.Edi.Serialization;
+﻿using EDIFACTMediator.Formats.OrdersD96A;
+using indice.Edi.Serialization;
 
 namespace EDIFACTMediator.Formats.OrderResponseD96A;
 
@@ -43,7 +44,7 @@ public class OrderResponse
 
     public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>(); // RFF segments
 
-    //public List<SegmentGroup2> Parties { get; set; } = new List<SegmentGroup2>(); // NAD segments
+    public List<PartySegment> Parties { get; set; } = new List<PartySegment>(); // NAD segments
 
     //public List<SegmentGroup9> TransportDetails { get; set; } = new List<SegmentGroup9>(); // TDT segments
 

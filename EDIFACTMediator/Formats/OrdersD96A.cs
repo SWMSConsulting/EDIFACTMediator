@@ -63,7 +63,7 @@ public class Order
 
     public List<FreeTextMessage> FreeTexts { get; set; } = new List<FreeTextMessage>(); // FTX segments
 
-    public List<SegmentGroup2> Parties { get; set; } = new List<SegmentGroup2>();
+    public List<PartySegment> Parties { get; set; } = new List<PartySegment>();
 
     //Add segment groups if needed (https://service.unece.org/trade/untdid/d96a/trmd/orders_d.htm#HS)
 
@@ -552,7 +552,7 @@ public class SegmentGroup5
 }
 
 [EdiSegmentGroup("NAD", SequenceEnd = "LIN")]
-public class SegmentGroup2
+public class PartySegment
 {
     public NameAndAddressMessage NameAndAddress { get; set; } // NAD segment
 

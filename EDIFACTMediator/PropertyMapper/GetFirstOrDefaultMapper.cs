@@ -3,7 +3,7 @@
 public class GetFirstOrDefaultMapper : IPropertyMapper
 {
     public IEnumerable<string> RequiredParameters => new List<string> { "FilterProperty", "FilterValue", "PropertyName" };
-
+    public Dictionary<string, string> DefaultValues => new Dictionary<string, string>();
 
     public object? Map(object? source, Dictionary<string, string> parameters)
     {
