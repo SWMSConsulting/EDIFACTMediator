@@ -1,4 +1,5 @@
-﻿using EDIFACTMediator.Utils;
+﻿using EDIFACTMediator.Formats.CommonD96A;
+using EDIFACTMediator.Utils;
 using indice.Edi.Serialization;
 
 namespace EDIFACTMediator.Formats.OrdersD96A;
@@ -633,6 +634,7 @@ public class DutyTaxFeeDetails
     public string PartyTaxIdentificationNumber { get; set; } // 3446
 }
 
+/*
 [EdiSegment, EdiElement, EdiPath("MOA")]
 public class MonetaryAmount
 {
@@ -652,14 +654,14 @@ public class MonetaryAmount
     [EdiValue("X(3)", Path = "MOA/0/4", Mandatory = false)]
     public string StatusCoded { get; set; } // 4405
 }
-
+*/
 [EdiSegmentGroup("SG6", "TAX", "MOA", "LOC")]
 public class SegmentGroup6
 {
     [EdiValue("X(35)", Path = "SG6/0")] public DutyTaxFeeDetails Tax { get; set; } // TAX segment
 
     [EdiValue("X(35)", Path = "SG6/1", Mandatory = false)]
-    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 
     [EdiValue("X(35)", Path = "SG6/2", Mandatory = false)]
     public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
@@ -781,7 +783,7 @@ public class SegmentGroup8
     public PercentageDetails PercentageDetails { get; set; } // PCD segment
 
     [EdiValue("X(35)", Path = "SG8/3", Mandatory = false)]
-    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 }
 
 [EdiSegment, EdiPath("TDT")]
@@ -1331,7 +1333,8 @@ public class SegmentGroup20
 [EdiSegmentGroup("SG21", "MOA", "RNG")]
 public class SegmentGroup21
 {
-    [EdiValue("X(35)", Path = "SG21/0")] public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    [EdiValue("X(35)", Path = "SG21/0")] 
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 
     [EdiValue("X(35)", Path = "SG21/1", Mandatory = false)]
     public RangeDetails RangeDetails { get; set; } // RNG segment
@@ -1352,7 +1355,7 @@ public class SegmentGroup23
     [EdiValue("X(35)", Path = "SG23/0")] public DutyTaxFeeDetails DutyTaxFeeDetails { get; set; } // TAX segment
 
     [EdiValue("X(35)", Path = "SG23/1", Mandatory = false)]
-    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 }
 
 [EdiSegmentGroup("SG18", "ALC", "ALI", "DTM", "SG19", "SG20", "SG21", "SG22", "SG23")]
@@ -1421,86 +1424,6 @@ public class SegmentGroup24
     public FreeTextMessage FreeText { get; set; } // FTX segment
 }
 
-[EdiSegment, EdiElement, EdiPath("PIA")]
-public class AdditionalProductId
-{
-    [EdiValue("X(3)", Path = "PIA/0", Mandatory = true)]
-    public string ProductIdFunctionQualifier { get; set; } // 4347
-
-    // First C212 Composite
-    [EdiValue("X(35)", Path = "PIA/1/0", Mandatory = false)]
-    public string ItemNumber1 { get; set; } // 7140
-
-    [EdiValue("X(3)", Path = "PIA/1/1", Mandatory = false)]
-    public string ItemNumberTypeCoded1 { get; set; } // 7143
-
-
-    [EdiValue("X(3)", Path = "PIA/1/2", Mandatory = false)]
-    public string ItemNumberCodeListQualifier1 { get; set; } // 1131
-
-    [EdiValue("X(3)", Path = "PIA/1/3", Mandatory = false)]
-    public string ItemNumberCodeListResponsibleAgency1 { get; set; } // 3055
-
-    public string ItemNumberCodeListResponsibleAgency1Text
-    {
-        get
-        {
-            return CodeListAgency.GetCodeDescription(ItemNumberCodeListResponsibleAgency1);
-        }
-    }
-
-    // Second C212 Composite
-    [EdiValue("X(35)", Path = "PIA/2/0", Mandatory = false)]
-    public string ItemNumber2 { get; set; } // 7140
-
-    [EdiValue("X(3)", Path = "PIA/2/1", Mandatory = false)]
-    public string ItemNumberTypeCoded2 { get; set; } // 7143
-
-    [EdiValue("X(3)", Path = "PIA/2/2", Mandatory = false)]
-    public string ItemNumberCodeListQualifier2 { get; set; } // 1131
-
-    [EdiValue("X(3)", Path = "PIA/2/3", Mandatory = false)]
-    public string ItemNumberCodeListResponsibleAgency2 { get; set; } // 3055
-
-    // Third C212 Composite
-    [EdiValue("X(35)", Path = "PIA/3/0", Mandatory = false)]
-    public string ItemNumber3 { get; set; } // 7140
-
-    [EdiValue("X(3)", Path = "PIA/3/1", Mandatory = false)]
-    public string ItemNumberTypeCoded3 { get; set; } // 7143
-
-    [EdiValue("X(3)", Path = "PIA/3/2", Mandatory = false)]
-    public string ItemNumberCodeListQualifier3 { get; set; } // 1131
-
-    [EdiValue("X(3)", Path = "PIA/3/3", Mandatory = false)]
-    public string ItemNumberCodeListResponsibleAgency3 { get; set; } // 3055
-
-    // Fourth C212 Composite
-    [EdiValue("X(35)", Path = "PIA/4/0", Mandatory = false)]
-    public string ItemNumber4 { get; set; } // 7140
-
-    [EdiValue("X(3)", Path = "PIA/4/1", Mandatory = false)]
-    public string ItemNumberTypeCoded4 { get; set; } // 7143
-
-    [EdiValue("X(3)", Path = "PIA/4/2", Mandatory = false)]
-    public string ItemNumberCodeListQualifier4 { get; set; } // 1131
-
-    [EdiValue("X(3)", Path = "PIA/4/3", Mandatory = false)]
-    public string ItemNumberCodeListResponsibleAgency4 { get; set; } // 3055
-
-    // Fifth C212 Composite
-    [EdiValue("X(35)", Path = "PIA/5/0", Mandatory = false)]
-    public string ItemNumber5 { get; set; } // 7140
-
-    [EdiValue("X(3)", Path = "PIA/5/1", Mandatory = false)]
-    public string ItemNumberTypeCoded5 { get; set; } // 7143
-
-    [EdiValue("X(3)", Path = "PIA/5/2", Mandatory = false)]
-    public string ItemNumberCodeListQualifier5 { get; set; } // 1131
-
-    [EdiValue("X(3)", Path = "PIA/5/3", Mandatory = false)]
-    public string ItemNumberCodeListResponsibleAgency5 { get; set; } // 3055
-}
 
 [EdiSegment, EdiElement, EdiPath("GIR")]
 public class RelatedIdentificationNumbers
@@ -1601,7 +1524,7 @@ public class SegmentGroup25Nordwest
 {
     public LineItem LineItem { get; set; } // LIN segment
 
-    public List<AdditionalProductId> AdditionalProductId { get; set; } // PIA segment
+    public List<AdditionalProductIdD96A> AdditionalProductId { get; set; } // PIA segment
 
     public List<ItemDescriptionMessage> ItemDescription { get; set; } // IMD segment
 
@@ -1693,7 +1616,7 @@ public class SegmentGroup25Nordwest
     //[EdiValue("X(35)", Path = "SG25/29", Mandatory = false)]
     //public SegmentGroup52 SegmentGroup52 { get; set; }
 
-    public PriceDetails PriceDetails { get; set; }
+    public PriceDetailsD96A PriceDetails { get; set; }
 }
 
 [EdiSegmentGroup("LIN", SequenceEnd = "UNS")]
@@ -1701,7 +1624,7 @@ public class LineItemGroup
 {
     public LineItem LineItem { get; set; } // LIN segment
 
-    public List<AdditionalProductId> AdditionalProductIds { get; set; } // PIA segment
+    public List<AdditionalProductIdD96A> AdditionalProductIds { get; set; } // PIA segment
 
     public List<ItemDescriptionMessage> ItemDescriptions { get; set; } // IMD segment
 
@@ -1715,7 +1638,7 @@ public class LineItemGroup
 
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 
-    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 
     public GoodsIdentityNumber GoodsIdentityNumber { get; set; } // GIN segment
 
@@ -1850,13 +1773,13 @@ public class SegmentGroup27
 
     public PercentageDetails PercentageDetails { get; set; } // PCD segment
 
-    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 }
 
 [EdiSegmentGroup("PRI", SequenceEnd = "DTM")]
 public class RelevantPriceInformation
 {
-    public PriceDetails PriceDetails { get; set; } // PRI segment
+    public PriceDetailsD96A PriceDetails { get; set; } // PRI segment
 
     public Currencies Currencies { get; set; } // CUX segment
 
@@ -1919,7 +1842,7 @@ public class SegmentGroup34
 {
     public DutyTaxFeeDetails DutyTaxFeeDetails { get; set; } // TAX segment
 
-    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 
     public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
 }
@@ -1943,7 +1866,7 @@ public class SegmentGroup41
 [EdiSegmentGroup("MOA")]
 public class SegmentGroup42
 {
-    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 
     public RangeDetails RangeDetails { get; set; } // RNG segment
 }
@@ -1962,7 +1885,7 @@ public class SegmentGroup44
     [EdiValue("X(35)", Path = "SG44/0")] public DutyTaxFeeDetails DutyTaxFeeDetails { get; set; } // TAX segment
 
     [EdiValue("X(35)", Path = "SG44/1", Mandatory = false)]
-    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 }
 
 [EdiSegmentGroup("ALC")]
@@ -2077,7 +2000,7 @@ public class Stages
 public class SegmentGroup53
 {
     public Quantity Quantity { get; set; } // QTY segment
-    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 }
 
 [EdiSegmentGroup("STG")]
@@ -2096,5 +2019,5 @@ public class SegmentGroup54
     public AdditionalInformationMessage AdditionalInformation { get; set; } // ALI segment
 
     [EdiValue("X(35)", Path = "SG54/2", Mandatory = false)]
-    public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
+    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 }

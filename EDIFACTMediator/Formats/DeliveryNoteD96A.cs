@@ -1,4 +1,4 @@
-﻿using EDIFACTMediator.Formats;
+﻿using EDIFACTMediator.Formats.CommonD96A;
 using EDIFACTMediator.Formats.OrderResponseD96A;
 using EDIFACTMediator.Utils;
 using indice.Edi.Serialization;
@@ -49,7 +49,7 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
 
         //public List<SegmentGroup9> TransportDetails { get; set; } = new List<SegmentGroup9>(); // TDT segment group
 
-        public List<LineItemGroup> LineItems { get; set; } = new List<LineItemGroup>(); // LIN+ groups (line items)
+        public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN+ groups (line items)
 
         [EdiSegment(Mandatory = true)]
         public SectionControl SectionControl { get; set; } = new SectionControl(); // UNS segment
@@ -78,6 +78,7 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
         public string MessageFunction { get; set; } = "9"; // Original (1225)
     }
 
+    /*
     [EdiSegmentGroup("LIN", SequenceEnd = "UNS")]
     public class LineItemGroup
     {
@@ -91,5 +92,5 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
 
         public List<Package> Packages { get; set; } = new List<Package>(); // PAC segments (package details)
     }
-
+    */
 }

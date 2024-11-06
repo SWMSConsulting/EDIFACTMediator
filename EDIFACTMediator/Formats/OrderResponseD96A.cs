@@ -1,4 +1,5 @@
-﻿using EDIFACTMediator.Formats.OrdersD96A;
+﻿using EDIFACTMediator.Formats.CommonD96A;
+using EDIFACTMediator.Formats.OrdersD96A;
 using indice.Edi.Serialization;
 
 namespace EDIFACTMediator.Formats.OrderResponseD96A;
@@ -27,6 +28,13 @@ public class OrderResponseD96A : IEdiFormat
                 ControlValue = item.LineItems.Count,
             };
             item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
+
+            item.DateTimes.Add(new DateTimePeriodMessage
+            {
+                DateTimePeriodFunctionCode = "137",
+                DateOfPreparation = DateTime.Now.ToString("yyyyMMdd"),
+                FormatQualifier = "102",
+            });
         }
 
         Trailer.InterchangeControlCount = OrderResponses.Count;
@@ -48,7 +56,7 @@ public class OrderResponse
 
     //public List<SegmentGroup9> TransportDetails { get; set; } = new List<SegmentGroup9>(); // TDT segments
 
-    public List<LineItemGroup> LineItems { get; set; } = new List<LineItemGroup>(); // LIN+ groups (line items)
+    public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN+ groups (line items)
 
     //[EdiSegment(Mandatory = true)]
     public SectionControl? SectionControl { get; set; } = null; // UNS segment
@@ -71,6 +79,7 @@ public class BeginningOfMessage
     public string MessageFunction { get; set; } = "29"; // Order acknowledgement (1225)
 }
 
+/*
 [EdiSegmentGroup("LIN", SequenceEnd = "UNS")]
 public class LineItemGroup
 {
@@ -84,4 +93,4 @@ public class LineItemGroup
 
     public List<DateTimePeriodMessage> DateTimePeriods { get; set; } = new List<DateTimePeriodMessage>(); // DTM segment
 }
-
+*/

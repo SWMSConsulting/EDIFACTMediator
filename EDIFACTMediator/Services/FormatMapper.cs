@@ -35,12 +35,12 @@ public class FormatMapper: IFormatMapper
     {
         var target = Activator.CreateInstance(formatMapping.TargetFormat);
         var baseProperties = formatMapping.PropertyMapping.Where(m => m.BaseMapping == null).ToList();
-        Task.WaitAll(baseProperties.Select(m => MapProperty(source, target, m)).ToArray());
+        Task.WaitAll(baseProperties.Select(m => MapProperty(source, target, m, source)).ToArray());
         return target;
     }
 
 
-    public async Task MapProperty(object? source, object? target, IPropertyMapping mapping)
+    public async Task MapProperty(object? source, object? target, IPropertyMapping mapping, object? sourceBase)
     {
         var targetPropName = mapping.TargetProperty.Split(".").LastOrDefault();
         var targetProperty = string.IsNullOrEmpty(targetPropName) ? null : target?.GetType().GetProperty(targetPropName);
@@ -70,14 +70,16 @@ public class FormatMapper: IFormatMapper
             var targetListType = targetProperty.PropertyType.GetGenericArguments().First();
             var targetList = Activator.CreateInstance(typeof(List<>).MakeGenericType(targetListType)) as System.Collections.IList;
 
-            if (sourceType == null || !sourceType.IsListType())
+            var mapper = mapping.Mapper;
+
+            if (mapper != null)
             {
-                var mapped = await MapPropertyValue(mapping, sourceValue);
+                Console.WriteLine("Directly map property list");
+                var mapped = await MapPropertyValue(mapping, sourceValue, sourceBase);
                 if (mapped != null && mapped.GetType().IsAssignableTo(targetProperty.PropertyType))
                 {
                     targetProperty.SetValue(target, mapped);
                 }
-                Console.WriteLine("Source property is not a list or null");
                 return;
             }
 
@@ -92,8 +94,7 @@ public class FormatMapper: IFormatMapper
             {
                 var targetInstance = Activator.CreateInstance(targetListType);
                 targetList.Add(targetInstance);
-
-                Task.WaitAll(mapping.SubMappings.Select(m => MapProperty(sourceInstance, targetInstance, m)).ToArray());
+                Task.WaitAll(mapping.SubMappings.Select(m => MapProperty(sourceInstance, targetInstance, m, sourceInstance)).ToArray());
 
             }
 
@@ -106,19 +107,19 @@ public class FormatMapper: IFormatMapper
             var instance = Activator.CreateInstance(targetProperty.PropertyType);
             targetProperty.SetValue(target, instance);
 
-            Task.WaitAll(mapping.SubMappings.Select(m => MapProperty(source, instance, m)).ToArray());
+            Task.WaitAll(mapping.SubMappings.Select(m => MapProperty(source, instance, m, sourceBase)).ToArray());
 
             return;
         }
 
-        var mappedValue = await MapPropertyValue(mapping, sourceValue);
+        var mappedValue = await MapPropertyValue(mapping, sourceValue, sourceBase);
         if (mappedValue != null && mappedValue.GetType().IsAssignableTo(targetProperty.PropertyType))
         {
             targetProperty.SetValue(target, mappedValue);
         }
     }
 
-    private async Task<object?> MapPropertyValue(IPropertyMapping propertyMapping, object? sourceValue)
+    private async Task<object?> MapPropertyValue(IPropertyMapping propertyMapping, object? sourceValue, object? sourceBase)
     {
         if (propertyMapping.Mapper == null)
         {
@@ -130,7 +131,7 @@ public class FormatMapper: IFormatMapper
         {
             return null;
         }
-        return mapper.Map(sourceValue, propertyMapping.MapperParameters);
+        return mapper.Map(sourceValue, propertyMapping.MapperParameters, sourceBase);
     }
 
     public object? GetPropertyValue(object? source, string? propertyName)

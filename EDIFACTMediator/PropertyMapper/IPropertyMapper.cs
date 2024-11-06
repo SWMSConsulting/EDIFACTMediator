@@ -7,5 +7,5 @@ public interface IPropertyMapper
 
     Dictionary<string, string> DefaultValues { get; }
 
-    object? Map(object? source, Dictionary<string, string> parameters);
+    object? Map(object? source, Dictionary<string, string> parameters, object? sourceBase);
 }

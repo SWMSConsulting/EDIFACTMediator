@@ -1,4 +1,5 @@
-﻿using EDIFACTMediator.Formats.OrdersD96A;
+﻿using EDIFACTMediator.Formats.CommonD96A;
+using EDIFACTMediator.Formats.OrdersD96A;
 using EDIFACTMediator.Utils;
 using indice.Edi.Serialization;
 
@@ -40,7 +41,7 @@ public class Invoice
 {
     public MessageHeader MessageHeader { get; set; } = new MessageHeader(); // UNH segment
 
-    public BeginningOfMessage BeginningOfMessage { get; set; } = new BeginningOfMessage(); // BGM segment
+    public BeginningOfMessageD96A BeginningOfMessage { get; set; } = new BeginningOfMessageD96A(); // BGM segment
 
     public List<DateTimePeriodMessage> DateTimes { get; set; } = new List<DateTimePeriodMessage>(); // DTM segments
 
@@ -54,31 +55,21 @@ public class Invoice
 
     public List<SegmentGroup6> Taxes { get; set; } = new List<SegmentGroup6>(); // TAX-MOA-LOC segments
 
-    public List<LineItemGroup> LineItems { get; set; } = new List<LineItemGroup>(); // LIN+ groups (line items)
+    public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN+ groups (line items)
 
     public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
 
     [EdiSegment(Mandatory = true)]
     public SectionControl SectionControl { get; set; } = new SectionControl(); // UNS segment
 
-    public MonetaryAmount InvoiceTotal { get; set; } = new MonetaryAmount(); // MOA segment
+    public List<MonetaryAmountD96A> MonetaryAmounts { get; set; } = new List<MonetaryAmountD96A>(); // MOA segment
 
     public MessageTrailer MessageTrailer { get; set; } = new MessageTrailer(); // UNT segment
 }
 
-[EdiSegment, EdiPath("BGM")]
-public class BeginningOfMessage
-{
-    [EdiValue("X(3)", Mandatory = true, Path = "BGM/0/0")]
-    public string DocumentNameCoded { get; set; } = "380"; // Commercial invoice coded (380 in EDIFACT)
 
-    [EdiValue("X(35)", Path = "BGM/1", Mandatory = true)]
-    public string DocumentNumber { get; set; } // Invoice number
 
-    [EdiValue("X(3)", Path = "BGM/2", Mandatory = false)]
-    public string MessageFunction { get; set; } = "9"; // Original invoice (1225)
-}
-
+/*
 [EdiSegmentGroup("LIN", SequenceEnd = "UNS")]
 public class LineItemGroup
 {
@@ -94,6 +85,7 @@ public class LineItemGroup
 
     public List<TaxDetails> TaxDetails { get; set; } = new List<TaxDetails>(); // TAX segment
 }
+*/
 
 [EdiSegment, EdiPath("TAX")]
 public class TaxDetails
@@ -102,15 +94,5 @@ public class TaxDetails
     public string DutyTaxFeeFunctionQualifier { get; set; } = "7"; // Tax information coded
 
     // Additional tax-related fields as required
-}
-
-[EdiSegment, EdiPath("MOA")]
-public class MonetaryAmount
-{
-    [EdiValue("X(3)", Path = "MOA/0/0", Mandatory = true)]
-    public string MonetaryAmountTypeQualifier { get; set; } // Total amount, tax amount, etc.
-
-    [EdiValue("9(18)", Path = "MOA/0/1", Mandatory = true)]
-    public decimal Amount { get; set; } // Amount value
 }
 

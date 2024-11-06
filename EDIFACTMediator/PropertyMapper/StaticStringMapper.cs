@@ -5,7 +5,7 @@ public class StaticStringMapper : IPropertyMapper
     public IEnumerable<string> RequiredParameters => ["Value"];
     public Dictionary<string, string> DefaultValues => new Dictionary<string, string>();
 
-    public object? Map(object? source, Dictionary<string, string> parameters)
+    public object? Map(object? source, Dictionary<string, string> parameters, object? sourceBase)
     {
         return parameters.GetValueOrDefault("Value");
     }
