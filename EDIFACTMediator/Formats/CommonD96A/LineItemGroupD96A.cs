@@ -6,6 +6,8 @@ public class LineItemGroupD96A
 {
     public LineItem LineItem { get; set; } = new LineItem(); // LIN segment
 
+    public List<AdditionalProductIdD96A> AdditionalProductIds { get; set; } = new List<AdditionalProductIdD96A>();
+
     public List<ItemDescriptionMessage> ItemDescriptions { get; set; } = new List<ItemDescriptionMessage>(); // IMD segments
 
     public List<Quantity> Quantities { get; set; } = new List<Quantity>(); // QTY segment
@@ -17,6 +19,4 @@ public class LineItemGroupD96A
     public List<PriceDetailsD96A> PriceDetails { get; set; } = new List<PriceDetailsD96A>(); // PRI segment
 
     public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>();
-
-    public List<AdditionalProductIdD96A> AdditionalProductIds { get; set; } = new List<AdditionalProductIdD96A>();
 }
