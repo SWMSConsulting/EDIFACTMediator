@@ -261,7 +261,7 @@ public class NameAndAddressMessage
     public string CodeListQualifier { get; set; } // 1131
 
     [EdiValue("X(3)", Path = "NAD/1/2", Mandatory = false)]
-    public string CodeListResponsibleAgency { get; set; } // 3055
+    public string CodeListResponsibleAgency { get; set; } = "9";// 3055
 
     // C058 Composite
     [EdiValue("X(35)", Path = "NAD/2/0", Mandatory = false)]
@@ -556,21 +556,22 @@ public class SegmentGroup5
 public class PartySegment
 {
     public NameAndAddressMessage NameAndAddress { get; set; } // NAD segment
+    /*
+    [EdiValue(Mandatory = false)]
+    public PlaceLocationIdentificationMessage? PlaceLocationIdentification { get; set; } = null;// LOC segment
 
     [EdiValue(Mandatory = false)]
-    public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
+    public FinancialInstitutionInformationMessage? FinancialInstitutionInformation { get; set; } = null;// FII segment
 
     [EdiValue(Mandatory = false)]
-    public FinancialInstitutionInformationMessage FinancialInstitutionInformation { get; set; } // FII segment
+    public SegmentGroup3? ReferenceDateTimePeriod { get; set; } = null;// SG3
 
     [EdiValue(Mandatory = false)]
-    public SegmentGroup3 ReferenceDateTimePeriod { get; set; } // SG3
+    public SegmentGroup4? DocumentDateTimePeriod { get; set; } = null;// SG4
 
     [EdiValue(Mandatory = false)]
-    public SegmentGroup4 DocumentDateTimePeriod { get; set; } // SG4
-
-    [EdiValue(Mandatory = false)]
-    public SegmentGroup5 ContactCommunication { get; set; } // SG5
+    public SegmentGroup5? ContactCommunication { get; set; } = null;// SG5
+    */
 }
 
 [EdiSegment, EdiPath("TAX")]

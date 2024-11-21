@@ -21,17 +21,22 @@ public class InterchangeHeader
     [EdiValue("X(35)", Path = "UNB/1/0", Mandatory = true)]
     public string SenderId { get; set; }
 
+    [EdiValue("X(35)", Path = "UNB/1/1", Mandatory = true)]
+    public string SenderQualifier { get; set; } = "14";
+
     //S003
     [EdiValue("X(35)", Path = "UNB/2/0", Mandatory = true)]
     public string RecipientId { get; set; }
 
-    [EdiValue("X(4)", Path = "UNB/2/1", Mandatory = true)]
-    public string ParterIDCode { get; set; }
+
+    [EdiValue("X(35)", Path = "UNB/2/1", Mandatory = true)]
+    public string RecipientQualifier { get; set; } = "14";
+
 
 
     //S004
 
-    [EdiValue("9(6)", Path = "UNB/3/0", Format = "ddMMyy", Description = "Date of Preparation")]
+    [EdiValue("9(6)", Path = "UNB/3/0", Format = "yyMMdd", Description = "Date of Preparation")]
     [EdiValue("9(4)", Path = "UNB/3/1", Format = "HHmm", Description = "Time or Prep")]
     public DateTime DateOfPreparation { get; set; }
 
