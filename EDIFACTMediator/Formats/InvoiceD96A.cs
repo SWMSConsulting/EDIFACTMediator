@@ -1,6 +1,5 @@
 ﻿using EDIFACTMediator.Formats.CommonD96A;
 using EDIFACTMediator.Formats.OrdersD96A;
-using EDIFACTMediator.Utils;
 using indice.Edi.Serialization;
 
 namespace EDIFACTMediator.Formats.InvoiceD96A;
@@ -19,9 +18,12 @@ public class InvoiceD96A : IEdiFormat
         Header.SyntaxIdentifier = "UNOC";
         Header.SyntaxVersion = 3;
 
+        Header.DateOfPreparation = DateTime.Now;
+
         foreach (var item in Invoices)
         {
             item.MessageHeader.MessageTypeIdentifier = "INVOIC";
+            item.MessageHeader.MessageReferenceNumber = "1";
 
             item.ControlTotal = new ControlTotal
             {
@@ -30,8 +32,21 @@ public class InvoiceD96A : IEdiFormat
             };
 
             item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
+
+            item.DateTimes.Add(new DateTimePeriodMessage
+            {
+                DateTimePeriodFunctionCode = "137",
+                DateOfPreparation = DateTime.Now.ToString("yyyyMMdd"),
+                FormatQualifier = "102",
+            });
+
+            item.SectionControl = new SectionControl
+            {
+                SectionIdentification = "S"
+            };
         }
 
+        Trailer.InterchangeControl = "1";
         Trailer.InterchangeControlCount = Invoices.Count;
     }
 }
@@ -57,10 +72,10 @@ public class Invoice
 
     public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN+ groups (line items)
 
-    public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
-
     [EdiSegment(Mandatory = true)]
     public SectionControl SectionControl { get; set; } = new SectionControl(); // UNS segment
+
+    public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
 
     public List<MonetaryAmountD96A> MonetaryAmounts { get; set; } = new List<MonetaryAmountD96A>(); // MOA segment
 
