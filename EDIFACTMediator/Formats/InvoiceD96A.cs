@@ -64,7 +64,7 @@ public class Invoice
 
     public List<PartySegment> Parties { get; set; } = new List<PartySegment>(); // NAD segments
 
-    public List<SegmentGroup7> Currencies { get; set; } = new List<SegmentGroup7>(); // CUX segments
+    public List<Currencies> Currencies { get; set; } = new List<Currencies>(); // CUX segments
 
     public List<SegmentGroup8> PaymentTerms { get; set; } = new List<SegmentGroup8>(); // PAT segments
 

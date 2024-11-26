@@ -678,6 +678,7 @@ public class Currencies
     [EdiValue("X(3)", Path = "CUX/0/1", Mandatory = false)]
     public string CurrencyCoded1 { get; set; } // 6345
 
+    /*
     [EdiValue("X(3)", Path = "CUX/0/2", Mandatory = false)]
     public string CurrencyQualifier1 { get; set; } // 6343
 
@@ -702,6 +703,7 @@ public class Currencies
 
     [EdiValue("X(3)", Path = "CUX/3", Mandatory = false)]
     public string CurrencyMarketExchangeCoded { get; set; } // 6341
+    */
 }
 
 [EdiSegment, EdiElement, EdiPath("PCD")]
@@ -724,17 +726,21 @@ public class PercentageDetails
     public string CodeListResponsibleAgencyCoded { get; set; } // 3055
 }
 
+/*
 [EdiSegmentGroup("SG7", "CUX", "PCD", "DTM")]
-public class SegmentGroup7
+public class CurrencyGroup
 {
-    [EdiValue("X(35)", Path = "SG7/0")] public Currencies Currencies { get; set; } // CUX segment
+    [EdiValue("X(35)", Path = "SG7/0")] 
+    public Currencies Currencies { get; set; } // CUX segment
 
     [EdiValue("X(35)", Path = "SG7/1", Mandatory = false)]
     public PercentageDetails PercentageDetails { get; set; } // PCD segment
 
     [EdiValue("X(35)", Path = "SG7/2", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
+    
 }
+*/
 
 [EdiSegment, EdiPath("PAT")]
 public class PaymentTermsBasis
