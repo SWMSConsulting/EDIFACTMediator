@@ -678,10 +678,10 @@ public class Currencies
     [EdiValue("X(3)", Path = "CUX/0/1", Mandatory = false)]
     public string CurrencyCoded1 { get; set; } // 6345
 
-    /*
     [EdiValue("X(3)", Path = "CUX/0/2", Mandatory = false)]
     public string CurrencyQualifier1 { get; set; } // 6343
 
+    /*
     [EdiValue("9(4)", Path = "CUX/0/3", Mandatory = false)]
     public int CurrencyRateBase1 { get; set; } // 6348
 
