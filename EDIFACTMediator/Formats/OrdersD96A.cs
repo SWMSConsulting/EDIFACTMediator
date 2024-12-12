@@ -71,7 +71,7 @@ public class Order
 
 
 
-    public List<LineItemGroup> LineItems { get; set; } = new List<LineItemGroup>(); // LIN-PIA-IMD-MEA-QTY-PCD-ALI-DTM-MOA-GIN-GIR-QVR-DOC-PAI-FTX-SG26-SG27-SG28-SG29-SG30-SG33-SG34-SG35-SG39-SG45-SG47-SG48-SG49-SG51-SG52 segment group
+    public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN-PIA-IMD-MEA-QTY-PCD-ALI-DTM-MOA-GIN-GIR-QVR-DOC-PAI-FTX-SG26-SG27-SG28-SG29-SG30-SG33-SG34-SG35-SG39-SG45-SG47-SG48-SG49-SG51-SG52 segment group
 
     //public Order Orders { get; set; }
     [EdiSegment(Mandatory = true)]
@@ -1626,6 +1626,7 @@ public class SegmentGroup25Nordwest
     public PriceDetailsD96A PriceDetails { get; set; }
 }
 
+/*
 [EdiSegmentGroup("LIN", SequenceEnd = "UNS")]
 public class LineItemGroup
 {
@@ -1704,7 +1705,7 @@ public class LineItemGroup
     //// Placeholder for Segment Group 52
     //public SegmentGroup52 SegmentGroup52 { get; set; }
 }
-
+*/
 [EdiSegment, EdiPath("CCI")]
 public class CharacteristicClassId
 {
