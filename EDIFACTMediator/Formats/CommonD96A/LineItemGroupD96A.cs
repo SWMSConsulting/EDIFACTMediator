@@ -10,7 +10,7 @@ public class LineItemGroupD96A
 
     public List<ItemDescriptionMessage> ItemDescriptions { get; set; } = new List<ItemDescriptionMessage>(); // IMD segments
 
-    public List<Quantity> Quantities { get; set; } = new List<Quantity>(); // QTY segment
+    public Quantity Quantity { get; set; } = new Quantity(); // QTY segment
 
     public List<DateTimePeriodMessage> DateTimePeriods { get; set; } = new List<DateTimePeriodMessage>(); // DTM segment
 
