@@ -30,5 +30,7 @@ public class LineItemGroupD96A
 
     public List<PriceDetailsD96A> PriceDetails { get; set; } = new List<PriceDetailsD96A>(); // PRI segment
 
+    public List<MonetaryAmountD96A> MonetaryAmounts { get; set; } = new List<MonetaryAmountD96A>(); // MOA segment
+
     public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>();
 }
