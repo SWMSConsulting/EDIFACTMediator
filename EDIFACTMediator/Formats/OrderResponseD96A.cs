@@ -62,6 +62,8 @@ public class OrderResponse
 
     public List<PartySegment> Parties { get; set; } = new List<PartySegment>(); // NAD segments
 
+    public List<Currencies> Currencies { get; set; } = new List<Currencies>(); // CUX segments
+
     //public List<SegmentGroup9> TransportDetails { get; set; } = new List<SegmentGroup9>(); // TDT segments
 
     public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN+ groups (line items)
