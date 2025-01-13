@@ -71,7 +71,8 @@ public class Order
 
 
 
-    public List<LineItemGroup> LineItems { get; set; } = new List<LineItemGroup>(); // LIN-PIA-IMD-MEA-QTY-PCD-ALI-DTM-MOA-GIN-GIR-QVR-DOC-PAI-FTX-SG26-SG27-SG28-SG29-SG30-SG33-SG34-SG35-SG39-SG45-SG47-SG48-SG49-SG51-SG52 segment group
+    public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN-PIA-IMD-MEA-QTY-PCD-ALI-DTM-MOA-GIN-GIR-QVR-DOC-PAI-FTX-SG26-SG27-SG28-SG29-SG30-SG33-SG34-SG35-SG39-SG45-SG47-SG48-SG49-SG51-SG52 segment group
+
 
     //public Order Orders { get; set; }
     [EdiSegment(Mandatory = true)]
@@ -261,7 +262,7 @@ public class NameAndAddressMessage
     public string CodeListQualifier { get; set; } // 1131
 
     [EdiValue("X(3)", Path = "NAD/1/2", Mandatory = false)]
-    public string CodeListResponsibleAgency { get; set; } // 3055
+    public string CodeListResponsibleAgency { get; set; } = "9";// 3055
 
     // C058 Composite
     [EdiValue("X(35)", Path = "NAD/2/0", Mandatory = false)]
@@ -556,21 +557,22 @@ public class SegmentGroup5
 public class PartySegment
 {
     public NameAndAddressMessage NameAndAddress { get; set; } // NAD segment
+    /*
+    [EdiValue(Mandatory = false)]
+    public PlaceLocationIdentificationMessage? PlaceLocationIdentification { get; set; } = null;// LOC segment
 
     [EdiValue(Mandatory = false)]
-    public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
+    public FinancialInstitutionInformationMessage? FinancialInstitutionInformation { get; set; } = null;// FII segment
 
     [EdiValue(Mandatory = false)]
-    public FinancialInstitutionInformationMessage FinancialInstitutionInformation { get; set; } // FII segment
+    public SegmentGroup3? ReferenceDateTimePeriod { get; set; } = null;// SG3
 
     [EdiValue(Mandatory = false)]
-    public SegmentGroup3 ReferenceDateTimePeriod { get; set; } // SG3
+    public SegmentGroup4? DocumentDateTimePeriod { get; set; } = null;// SG4
 
     [EdiValue(Mandatory = false)]
-    public SegmentGroup4 DocumentDateTimePeriod { get; set; } // SG4
-
-    [EdiValue(Mandatory = false)]
-    public SegmentGroup5 ContactCommunication { get; set; } // SG5
+    public SegmentGroup5? ContactCommunication { get; set; } = null;// SG5
+    */
 }
 
 [EdiSegment, EdiPath("TAX")]
@@ -680,6 +682,7 @@ public class Currencies
     [EdiValue("X(3)", Path = "CUX/0/2", Mandatory = false)]
     public string CurrencyQualifier1 { get; set; } // 6343
 
+    /*
     [EdiValue("9(4)", Path = "CUX/0/3", Mandatory = false)]
     public int CurrencyRateBase1 { get; set; } // 6348
 
@@ -701,6 +704,7 @@ public class Currencies
 
     [EdiValue("X(3)", Path = "CUX/3", Mandatory = false)]
     public string CurrencyMarketExchangeCoded { get; set; } // 6341
+    */
 }
 
 [EdiSegment, EdiElement, EdiPath("PCD")]
@@ -723,17 +727,21 @@ public class PercentageDetails
     public string CodeListResponsibleAgencyCoded { get; set; } // 3055
 }
 
+/*
 [EdiSegmentGroup("SG7", "CUX", "PCD", "DTM")]
-public class SegmentGroup7
+public class CurrencyGroup
 {
-    [EdiValue("X(35)", Path = "SG7/0")] public Currencies Currencies { get; set; } // CUX segment
+    [EdiValue("X(35)", Path = "SG7/0")] 
+    public Currencies Currencies { get; set; } // CUX segment
 
     [EdiValue("X(35)", Path = "SG7/1", Mandatory = false)]
     public PercentageDetails PercentageDetails { get; set; } // PCD segment
 
     [EdiValue("X(35)", Path = "SG7/2", Mandatory = false)]
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
+    
 }
+*/
 
 [EdiSegment, EdiPath("PAT")]
 public class PaymentTermsBasis
@@ -1517,185 +1525,6 @@ public class QuantityVariances
 
     [EdiValue("X(35)", Path = "QVR/2/3", Mandatory = false)]
     public string ChangeReason { get; set; } // 4294
-}
-
-[EdiSegmentGroup("LIN", SequenceEnd = "PRI")]
-public class SegmentGroup25Nordwest
-{
-    public LineItem LineItem { get; set; } // LIN segment
-
-    public List<AdditionalProductIdD96A> AdditionalProductId { get; set; } // PIA segment
-
-    public List<ItemDescriptionMessage> ItemDescription { get; set; } // IMD segment
-
-    //[EdiValue("X(35)", Path = "SG25/3", Mandatory = false)]
-    //public Measurements Measurements { get; set; } // MEA segment
-
-    public Quantity Quantity { get; set; } // QTY segment
-
-    public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
-
-    //[EdiValue("X(35)", Path = "SG25/8", Mandatory = false)]
-    //public MonetaryAmount MonetaryAmount { get; set; } // MOA segment
-
-    //[EdiValue("X(35)", Path = "SG25/9", Mandatory = false)]
-    //public GoodsIdentityNumber GoodsIdentityNumber { get; set; } // GIN segment
-
-    //[EdiValue("X(35)", Path = "SG25/10", Mandatory = false)]
-    //public RelatedIdentificationNumbers RelatedIdentificationNumbers { get; set; } // GIR segment
-
-    //[EdiValue("X(35)", Path = "SG25/11", Mandatory = false)]
-    //public QuantityVariances QuantityVariances { get; set; } // QVR segment
-
-    //[EdiValue("X(35)", Path = "SG25/12", Mandatory = false)]
-    //public DocumentMessageDetails DocumentMessageDetails { get; set; } // DOC segment
-
-    //[EdiValue("X(35)", Path = "SG25/13", Mandatory = false)]
-    //public PaymentInstructionMessage PaymentInstructions { get; set; } // PAI segment
-
-    //[EdiValue("X(35)", Path = "SG25/14", Mandatory = false)]
-    //public FreeTextMessage FreeText { get; set; } // FTX segment
-
-    //// Placeholder for Segment Group 26
-    //[EdiValue("X(35)", Path = "SG25/15", Mandatory = false)]
-    //public SegmentGroup26 ProductCharacteristics { get; set; }
-
-    //// Placeholder for Segment Group 27
-    //[EdiValue("X(35)", Path = "SG25/16", Mandatory = false)]
-    //public SegmentGroup27 TermsOfPayment { get; set; }
-
-    //// Placeholder for Segment Group 28
-    //[EdiValue("X(35)", Path = "SG25/17", Mandatory = false)]
-    //public SegmentGroup28 RelevantPricingInformation { get; set; }
-
-    //// Placeholder for Segment Group 29
-    //[EdiValue("X(35)", Path = "SG25/18", Mandatory = false)]
-    //public SegmentGroup29 References { get; set; }
-
-    //// Placeholder for Segment Group 30
-    //[EdiValue("X(35)", Path = "SG25/19", Mandatory = false)]
-    //public SegmentGroup30 Packaging { get; set; }
-
-    //// Placeholder for Segment Group 33
-    //[EdiValue("X(35)", Path = "SG25/20", Mandatory = false)]
-    //public SegmentGroup33 DestinationDetails { get; set; }
-
-    //// Placeholder for Segment Group 34
-    //[EdiValue("X(35)", Path = "SG25/21", Mandatory = false)]
-    //public SegmentGroup34 TaxInformation { get; set; }
-
-    //// Placeholder for Segment Group 35
-    //[EdiValue("X(35)", Path = "SG25/22", Mandatory = false)]
-    //public SegmentGroup35 PartiesDetails { get; set; }
-
-    //// Placeholder for Segment Group 39
-    //[EdiValue("X(35)", Path = "SG25/23", Mandatory = false)]
-    //public SegmentGroup39 AllowancesCharges { get; set; }
-
-    //// Placeholder for Segment Group 45
-    //[EdiValue("X(35)", Path = "SG25/24", Mandatory = false)]
-    //public SegmentGroup45 SegmentGroup45 { get; set; }
-
-    //// Placeholder for Segment Group 47
-    //[EdiValue("X(35)", Path = "SG25/25", Mandatory = false)]
-    //public SegmentGroup47 SegmentGroup47 { get; set; }
-
-    //// Placeholder for Segment Group 48
-    //[EdiValue("X(35)", Path = "SG25/26", Mandatory = false)]
-    //public SegmentGroup48 SegmentGroup48 { get; set; }
-
-    //// Placeholder for Segment Group 49
-    //[EdiValue("X(35)", Path = "SG25/27", Mandatory = false)]
-    //public SegmentGroup49 SegmentGroup49 { get; set; }
-
-    //// Placeholder for Segment Group 51
-    //[EdiValue("X(35)", Path = "SG25/28", Mandatory = false)]
-    //public SegmentGroup51 SegmentGroup51 { get; set; }
-
-    //// Placeholder for Segment Group 52
-    //[EdiValue("X(35)", Path = "SG25/29", Mandatory = false)]
-    //public SegmentGroup52 SegmentGroup52 { get; set; }
-
-    public PriceDetailsD96A PriceDetails { get; set; }
-}
-
-[EdiSegmentGroup("LIN", SequenceEnd = "UNS")]
-public class LineItemGroup
-{
-    public LineItem LineItem { get; set; } // LIN segment
-
-    public List<AdditionalProductIdD96A> AdditionalProductIds { get; set; } // PIA segment
-
-    public List<ItemDescriptionMessage> ItemDescriptions { get; set; } // IMD segment
-
-    public Measurements Measurements { get; set; } // MEA segment
-
-    public Quantity Quantity { get; set; } // QTY segment
-
-    public PercentageDetails PercentageDetails { get; set; } // PCD segment
-
-    public AdditionalInformationMessage AdditionalInformation { get; set; } // ALI segment
-
-    public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
-
-    public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
-
-    public GoodsIdentityNumber GoodsIdentityNumber { get; set; } // GIN segment
-
-    public RelatedIdentificationNumbers RelatedIdentificationNumbers { get; set; } // GIR segment
-
-    public QuantityVariances QuantityVariances { get; set; } // QVR segment
-
-    public DocumentMessageDetails DocumentMessageDetails { get; set; } // DOC segment
-
-    public PaymentInstructionMessage PaymentInstructions { get; set; } // PAI segment
-
-    public FreeTextMessage FreeText { get; set; } // FTX segment
-
-    public SegmentGroup26 ProductCharacteristics { get; set; }
-
-    // Placeholder for Segment Group 27
-    public SegmentGroup27 TermsOfPayment { get; set; }
-
-    // Placeholder for Segment Group 28
-    //public PriceDetails PriceDetails { get; set; } // PRI segment
-
-    public RelevantPriceInformation RelevantPricingInformation { get; set; }
-
-    // Placeholder for Segment Group 29
-    //public SegmentGroup29 References { get; set; }
-
-    //// Placeholder for Segment Group 30
-    //public SegmentGroup30 Packaging { get; set; }
-
-    //// Placeholder for Segment Group 33
-    //public SegmentGroup33 DestinationDetails { get; set; }
-
-    //// Placeholder for Segment Group 34
-    //public SegmentGroup34 TaxInformation { get; set; }
-
-    //// Placeholder for Segment Group 35
-    //public SegmentGroup35 PartiesDetails { get; set; }
-
-    // Placeholder for Segment Group 39
-    //public SegmentGroup39 AllowancesCharges { get; set; }
-
-    //public SegmentGroup45 SegmentGroup45 { get; set; }
-
-    // Placeholder for Segment Group 47
-    // public SegmentGroup47 SegmentGroup47 { get; set; }
-
-    // Placeholder for Segment Group 48
-    //public SegmentGroup48 SegmentGroup48 { get; set; }
-
-    //// Placeholder for Segment Group 49
-    //public SegmentGroup49 SegmentGroup49 { get; set; }
-
-    //// Placeholder for Segment Group 51
-    //public SegmentGroup51 SegmentGroup51 { get; set; }
-
-    //// Placeholder for Segment Group 52
-    //public SegmentGroup52 SegmentGroup52 { get; set; }
 }
 
 [EdiSegment, EdiPath("CCI")]

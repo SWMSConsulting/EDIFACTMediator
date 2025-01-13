@@ -21,17 +21,22 @@ public class InterchangeHeader
     [EdiValue("X(35)", Path = "UNB/1/0", Mandatory = true)]
     public string SenderId { get; set; }
 
+    [EdiValue("X(35)", Path = "UNB/1/1", Mandatory = true)]
+    public string SenderQualifier { get; set; } = "14";
+
     //S003
     [EdiValue("X(35)", Path = "UNB/2/0", Mandatory = true)]
     public string RecipientId { get; set; }
 
-    [EdiValue("X(4)", Path = "UNB/2/1", Mandatory = true)]
-    public string ParterIDCode { get; set; }
+
+    [EdiValue("X(35)", Path = "UNB/2/1", Mandatory = true)]
+    public string RecipientQualifier { get; set; } = "14";
+
 
 
     //S004
 
-    [EdiValue("9(6)", Path = "UNB/3/0", Format = "ddMMyy", Description = "Date of Preparation")]
+    [EdiValue("9(6)", Path = "UNB/3/0", Format = "yyMMdd", Description = "Date of Preparation")]
     [EdiValue("9(4)", Path = "UNB/3/1", Format = "HHmm", Description = "Time or Prep")]
     public DateTime DateOfPreparation { get; set; }
 
@@ -94,7 +99,8 @@ public class DateTimePeriodMessage
         get
         {
 
-            if (DateTime.TryParseExact(DateOfPreparation, DateTimeFormat.GetDateTimeFormat(FormatQualifier), null, System.Globalization.DateTimeStyles.None, out DateTime date))
+            var formatQualifier = !string.IsNullOrEmpty(FormatQualifier) ? FormatQualifier : "102";
+            if (DateTime.TryParseExact(DateOfPreparation, DateTimeFormat.GetDateTimeFormat(formatQualifier), null, System.Globalization.DateTimeStyles.None, out DateTime date))
             {
                 return date;
             }
@@ -142,41 +148,6 @@ public class ControlTotal
     public string MeasureUnitQualifier { get; set; } // 6411
 }
 
-[EdiSegment, EdiElement, EdiPath("LIN")]
-public class LineItem
-{
-    [EdiValue("9(6)", Path = "LIN/0", Mandatory = false)]
-    public int? LineItemNumber { get; set; } // 1082
-
-    [EdiValue("X(3)", Path = "LIN/1", Mandatory = false)]
-    public string? ActionRequestNotificationCoded { get; set; } = "";// 1229
-
-    // C212 Composite
-    [EdiValue("X(35)", Path = "LIN/2/0", Mandatory = false)]
-    public string? ItemNumber { get; set; } // 7140
-
-    [EdiValue("X(3)", Path = "LIN/2/1", Mandatory = false)]
-    public string? ItemNumberTypeCoded { get; set; } = "EN"; // 7143
-
-    [EdiValue("X(3)", Path = "LIN/2/2", Mandatory = false)]
-    public string? ItemNumberCodeListQualifier { get; set; } // 1131
-
-    [EdiValue("X(3)", Path = "LIN/2/3", Mandatory = false)]
-    public string? ItemNumberCodeListResponsibleAgency { get; set; } // 3055
-
-    // C829 Composite
-    [EdiValue("X(3)", Path = "LIN/3/0", Mandatory = false)]
-    public string? SubLineIndicatorCoded { get; set; } = ""; // 5495
-
-    [EdiValue("9(6)", Path = "LIN/3/1", Mandatory = false)]
-    public int? SubLineItemNumber { get; set; } // 1082
-
-    [EdiValue("9(2)", Path = "LIN/4", Mandatory = false)]
-    public int? ConfigurationLevel { get; set; } // 1222
-
-    [EdiValue("X(3)", Path = "LIN/5", Mandatory = false)]
-    public string? ConfigurationCoded { get; set; }  // 7083
-}
 
 [EdiSegment, EdiElement, EdiPath("IMD")]
 public class ItemDescriptionMessage

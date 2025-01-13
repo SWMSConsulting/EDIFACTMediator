@@ -18,9 +18,12 @@ public class OrderResponseD96A : IEdiFormat
         Header.SyntaxIdentifier = "UNOC";
         Header.SyntaxVersion = 3;
 
+        Header.DateOfPreparation = DateTime.Now;
+
         foreach (var item in OrderResponses)
         {
             item.MessageHeader.MessageTypeIdentifier = "ORDRSP";
+            item.MessageHeader.MessageReferenceNumber = "1";
 
             item.ControlTotal = new ControlTotal
             {
@@ -35,8 +38,13 @@ public class OrderResponseD96A : IEdiFormat
                 DateOfPreparation = DateTime.Now.ToString("yyyyMMdd"),
                 FormatQualifier = "102",
             });
+
+            item.SectionControl = new SectionControl { 
+                SectionIdentification = "S"
+            };
         }
 
+        Trailer.InterchangeControl = "1";
         Trailer.InterchangeControlCount = OrderResponses.Count;
     }
 }
@@ -53,6 +61,8 @@ public class OrderResponse
     public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>(); // RFF segments
 
     public List<PartySegment> Parties { get; set; } = new List<PartySegment>(); // NAD segments
+
+    public List<Currencies> Currencies { get; set; } = new List<Currencies>(); // CUX segments
 
     //public List<SegmentGroup9> TransportDetails { get; set; } = new List<SegmentGroup9>(); // TDT segments
 

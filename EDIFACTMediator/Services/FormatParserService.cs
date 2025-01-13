@@ -55,6 +55,11 @@ public static class FormatParserService
             return textWriter.ToString();
         }
 
-        return JsonConvert.SerializeObject(toSerialize);
+        var settings = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore 
+        };
+
+        return JsonConvert.SerializeObject(toSerialize, settings);
     }
 }
