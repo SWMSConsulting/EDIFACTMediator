@@ -248,83 +248,6 @@ public class SegmentGroup1
     [EdiValue("X(35)", Path = "SG1/1")] public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
-[EdiSegment, EdiElement, EdiPath("NAD")]
-public class NameAndAddressMessage
-{
-    [EdiValue("X(3)", Path = "NAD/0", Mandatory = true)]
-    public string PartyQualifier { get; set; } // 3035
-
-    // C082 Composite
-    [EdiValue("X(35)", Path = "NAD/1/0", Mandatory = false)]
-    public string PartyIdIdentification { get; set; } // 3039
-
-    [EdiValue("X(3)", Path = "NAD/1/1", Mandatory = false)]
-    public string CodeListQualifier { get; set; } // 1131
-
-    [EdiValue("X(3)", Path = "NAD/1/2", Mandatory = false)]
-    public string CodeListResponsibleAgency { get; set; } = "9";// 3055
-
-    // C058 Composite
-    [EdiValue("X(35)", Path = "NAD/2/0", Mandatory = false)]
-    public string NameAndAddressLine1 { get; set; } // 3124
-
-    [EdiValue("X(35)", Path = "NAD/2/1", Mandatory = false)]
-    public string NameAndAddressLine2 { get; set; } // 3124
-
-    [EdiValue("X(35)", Path = "NAD/2/2", Mandatory = false)]
-    public string NameAndAddressLine3 { get; set; } // 3124
-
-    [EdiValue("X(35)", Path = "NAD/2/3", Mandatory = false)]
-    public string NameAndAddressLine4 { get; set; } // 3124
-
-    [EdiValue("X(35)", Path = "NAD/2/4", Mandatory = false)]
-    public string NameAndAddressLine5 { get; set; } // 3124
-
-    // C080 Composite
-    [EdiValue("X(35)", Path = "NAD/3/0", Mandatory = false)]
-    public string PartyName1 { get; set; } // 3036
-
-    [EdiValue("X(35)", Path = "NAD/3/1", Mandatory = false)]
-    public string PartyName2 { get; set; } // 3036
-
-    [EdiValue("X(35)", Path = "NAD/3/2", Mandatory = false)]
-    public string PartyName3 { get; set; } // 3036
-
-    [EdiValue("X(35)", Path = "NAD/3/3", Mandatory = false)]
-    public string PartyName4 { get; set; } // 3036
-
-    [EdiValue("X(35)", Path = "NAD/3/4", Mandatory = false)]
-    public string PartyName5 { get; set; } // 3036
-
-    [EdiValue("X(3)", Path = "NAD/3/5", Mandatory = false)]
-    public string PartyNameFormatCoded { get; set; } // 3045
-
-    // C059 Composite
-    [EdiValue("X(35)", Path = "NAD/4/0", Mandatory = false)]
-    public string StreetAndNumberPOBox1 { get; set; } // 3042
-
-    [EdiValue("X(35)", Path = "NAD/4/1", Mandatory = false)]
-    public string StreetAndNumberPOBox2 { get; set; } // 3042
-
-    [EdiValue("X(35)", Path = "NAD/4/2", Mandatory = false)]
-    public string StreetAndNumberPOBox3 { get; set; } // 3042
-
-    [EdiValue("X(35)", Path = "NAD/4/3", Mandatory = false)]
-    public string StreetAndNumberPOBox4 { get; set; } // 3042
-
-    [EdiValue("X(35)", Path = "NAD/5", Mandatory = false)]
-    public string CityName { get; set; } // 3164
-
-    [EdiValue("X(9)", Path = "NAD/6", Mandatory = false)]
-    public string CountrySubEntityIdentification { get; set; } // 3229
-
-    [EdiValue("X(9)", Path = "NAD/7", Mandatory = false)]
-    public string PostcodeIdentification { get; set; } // 3251
-
-    [EdiValue("X(3)", Path = "NAD/8", Mandatory = false)]
-    public string CountryCoded { get; set; } // 3207
-}
-
 [EdiSegment, EdiElement, EdiPath("LOC")]
 public class PlaceLocationIdentificationMessage
 {
@@ -515,7 +438,7 @@ public class SegmentGroup38
 [EdiSegmentGroup("NAD")]
 public class SegmentGroup35
 {
-    public NameAndAddressMessage NameAndAddress { get; set; } // NAD segment
+    //public NameAndAddressMessage NameAndAddress { get; set; } // NAD segment
 
     public PlaceLocationIdentificationMessage PlaceLocationIdentification { get; set; } // LOC segment
 
@@ -556,7 +479,80 @@ public class SegmentGroup5
 [EdiSegmentGroup("NAD", SequenceEnd = "LIN")]
 public class PartySegment
 {
-    public NameAndAddressMessage NameAndAddress { get; set; } // NAD segment
+    //public NameAndAddressMessage NameAndAddress { get; set; } // NAD segment
+
+    [EdiValue("X(3)", Path = "NAD/0", Mandatory = true)]
+    public string PartyQualifier { get; set; } // 3035
+
+    // C082 Composite
+    [EdiValue("X(35)", Path = "NAD/1/0", Mandatory = false)]
+    public string PartyIdIdentification { get; set; } // 3039
+
+    [EdiValue("X(3)", Path = "NAD/1/1", Mandatory = false)]
+    public string CodeListQualifier { get; set; } // 1131
+
+    [EdiValue("X(3)", Path = "NAD/1/2", Mandatory = false)]
+    public string CodeListResponsibleAgency { get; set; } = "9";// 3055
+
+    // C058 Composite
+    [EdiValue("X(35)", Path = "NAD/2/0", Mandatory = false)]
+    public string NameAndAddressLine1 { get; set; } // 3124
+
+    [EdiValue("X(35)", Path = "NAD/2/1", Mandatory = false)]
+    public string NameAndAddressLine2 { get; set; } // 3124
+
+    [EdiValue("X(35)", Path = "NAD/2/2", Mandatory = false)]
+    public string NameAndAddressLine3 { get; set; } // 3124
+
+    [EdiValue("X(35)", Path = "NAD/2/3", Mandatory = false)]
+    public string NameAndAddressLine4 { get; set; } // 3124
+
+    [EdiValue("X(35)", Path = "NAD/2/4", Mandatory = false)]
+    public string NameAndAddressLine5 { get; set; } // 3124
+
+    // C080 Composite
+    [EdiValue("X(35)", Path = "NAD/3/0", Mandatory = false)]
+    public string PartyName1 { get; set; } // 3036
+
+    [EdiValue("X(35)", Path = "NAD/3/1", Mandatory = false)]
+    public string PartyName2 { get; set; } // 3036
+
+    [EdiValue("X(35)", Path = "NAD/3/2", Mandatory = false)]
+    public string PartyName3 { get; set; } // 3036
+
+    [EdiValue("X(35)", Path = "NAD/3/3", Mandatory = false)]
+    public string PartyName4 { get; set; } // 3036
+
+    [EdiValue("X(35)", Path = "NAD/3/4", Mandatory = false)]
+    public string PartyName5 { get; set; } // 3036
+
+    [EdiValue("X(3)", Path = "NAD/3/5", Mandatory = false)]
+    public string PartyNameFormatCoded { get; set; } // 3045
+
+    // C059 Composite
+    [EdiValue("X(35)", Path = "NAD/4/0", Mandatory = false)]
+    public string StreetAndNumberPOBox1 { get; set; } // 3042
+
+    [EdiValue("X(35)", Path = "NAD/4/1", Mandatory = false)]
+    public string StreetAndNumberPOBox2 { get; set; } // 3042
+
+    [EdiValue("X(35)", Path = "NAD/4/2", Mandatory = false)]
+    public string StreetAndNumberPOBox3 { get; set; } // 3042
+
+    [EdiValue("X(35)", Path = "NAD/4/3", Mandatory = false)]
+    public string StreetAndNumberPOBox4 { get; set; } // 3042
+
+    [EdiValue("X(35)", Path = "NAD/5", Mandatory = false)]
+    public string CityName { get; set; } // 3164
+
+    [EdiValue("X(9)", Path = "NAD/6", Mandatory = false)]
+    public string CountrySubEntityIdentification { get; set; } // 3229
+
+    [EdiValue("X(9)", Path = "NAD/7", Mandatory = false)]
+    public string PostcodeIdentification { get; set; } // 3251
+
+    [EdiValue("X(3)", Path = "NAD/8", Mandatory = false)]
+    public string CountryCoded { get; set; } // 3207
     /*
     [EdiValue(Mandatory = false)]
     public PlaceLocationIdentificationMessage? PlaceLocationIdentification { get; set; } = null;// LOC segment

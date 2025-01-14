@@ -104,6 +104,16 @@ public class FormatMapper: IFormatMapper
 
         if (targetProperty.PropertyType.IsComplexType())
         {
+            if(mapping.Mapper != null)
+            {
+                var mapped = await MapPropertyValue(mapping, sourceValue, sourceBase);
+                if (mapped != null && mapped.GetType().IsAssignableTo(targetProperty.PropertyType))
+                {
+                    targetProperty.SetValue(target, mapped);
+                }
+                return;
+            }
+
             var instance = Activator.CreateInstance(targetProperty.PropertyType);
             targetProperty.SetValue(target, instance);
 
