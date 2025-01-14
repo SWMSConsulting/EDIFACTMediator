@@ -68,6 +68,8 @@ public class OrderResponse
 
     public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN+ groups (line items)
 
+    public List<MonetaryAmountD96A> MonetaryAmounts { get; set; } = new List<MonetaryAmountD96A>(); // MOA segment
+
     //[EdiSegment(Mandatory = true)]
     public SectionControl? SectionControl { get; set; } = null; // UNS segment
 
