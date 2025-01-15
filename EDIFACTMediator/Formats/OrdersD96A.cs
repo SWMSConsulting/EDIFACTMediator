@@ -569,6 +569,9 @@ public class PartySegment
     [EdiValue(Mandatory = false)]
     public SegmentGroup5? ContactCommunication { get; set; } = null;// SG5
     */
+
+    public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>(); // RFF segments
+
 }
 
 [EdiSegment, EdiPath("TAX")]
