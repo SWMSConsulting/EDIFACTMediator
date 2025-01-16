@@ -1,4 +1,5 @@
-﻿using indice.Edi.Serialization;
+﻿using EDIFACTMediator.Formats.OrdersD96A;
+using indice.Edi.Serialization;
 namespace EDIFACTMediator.Formats.CommonD96A;
 
 [EdiSegmentGroup("LIN", SequenceEnd = "UNS")]
@@ -29,6 +30,8 @@ public class LineItemGroupD96A
     public List<Package> Packages { get; set; } = new List<Package>(); // PAC segments (package details)
 
     public List<PriceDetailsD96A> PriceDetails { get; set; } = new List<PriceDetailsD96A>(); // PRI segment
+
+    public List<TaxDetails> TaxDetails { get; set; } = new List<TaxDetails>(); // TAX segment
 
     public List<MonetaryAmountD96A> MonetaryAmounts { get; set; } = new List<MonetaryAmountD96A>(); // MOA segment
 

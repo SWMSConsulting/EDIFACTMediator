@@ -84,30 +84,3 @@ public class Invoice
 
 
 
-/*
-[EdiSegmentGroup("LIN", SequenceEnd = "UNS")]
-public class LineItemGroup
-{
-    public LineItem LineItem { get; set; } = new LineItem(); // LIN segment
-
-    public List<ItemDescriptionMessage> ItemDescriptions { get; set; } = new List<ItemDescriptionMessage>(); // IMD segments
-
-    public List<Quantity> Quantities { get; set; } = new List<Quantity>(); // QTY segment
-
-    public List<PriceDetails> PriceDetails { get; set; } = new List<PriceDetails>(); // PRI segment
-
-    public List<DateTimePeriodMessage> DateTimePeriods { get; set; } = new List<DateTimePeriodMessage>(); // DTM segment
-
-    public List<TaxDetails> TaxDetails { get; set; } = new List<TaxDetails>(); // TAX segment
-}
-*/
-
-[EdiSegment, EdiPath("TAX")]
-public class TaxDetails
-{
-    [EdiValue("X(3)", Path = "TAX/0/0", Mandatory = true)]
-    public string DutyTaxFeeFunctionQualifier { get; set; } = "7"; // Tax information coded
-
-    // Additional tax-related fields as required
-}
-

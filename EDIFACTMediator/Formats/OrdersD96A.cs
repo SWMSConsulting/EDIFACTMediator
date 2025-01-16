@@ -575,7 +575,7 @@ public class PartySegment
 }
 
 [EdiSegment, EdiPath("TAX")]
-public class DutyTaxFeeDetails
+public class TaxDetails
 {
     [EdiValue("X(3)", Path = "TAX/0", Mandatory = true)]
     public string DutyTaxFeeFunctionQualifier { get; set; } // 5283
@@ -659,7 +659,7 @@ public class MonetaryAmount
 [EdiSegmentGroup("SG6", "TAX", "MOA", "LOC")]
 public class SegmentGroup6
 {
-    [EdiValue("X(35)", Path = "SG6/0")] public DutyTaxFeeDetails Tax { get; set; } // TAX segment
+    [EdiValue("X(35)", Path = "SG6/0")] public TaxDetails Tax { get; set; } // TAX segment
 
     [EdiValue("X(35)", Path = "SG6/1", Mandatory = false)]
     public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
@@ -1359,7 +1359,7 @@ public class SegmentGroup22
 [EdiSegmentGroup("SG23", "TAX", "MOA")]
 public class SegmentGroup23
 {
-    [EdiValue("X(35)", Path = "SG23/0")] public DutyTaxFeeDetails DutyTaxFeeDetails { get; set; } // TAX segment
+    [EdiValue("X(35)", Path = "SG23/0")] public TaxDetails DutyTaxFeeDetails { get; set; } // TAX segment
 
     [EdiValue("X(35)", Path = "SG23/1", Mandatory = false)]
     public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
@@ -1668,7 +1668,7 @@ public class SegmentGroup33
 [EdiSegmentGroup("TAX")]
 public class SegmentGroup34
 {
-    public DutyTaxFeeDetails DutyTaxFeeDetails { get; set; } // TAX segment
+    public TaxDetails DutyTaxFeeDetails { get; set; } // TAX segment
 
     public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 
@@ -1710,7 +1710,7 @@ public class SegmentGroup43
 [EdiSegmentGroup("SG44", "TAX", "MOA")]
 public class SegmentGroup44
 {
-    [EdiValue("X(35)", Path = "SG44/0")] public DutyTaxFeeDetails DutyTaxFeeDetails { get; set; } // TAX segment
+    [EdiValue("X(35)", Path = "SG44/0")] public TaxDetails DutyTaxFeeDetails { get; set; } // TAX segment
 
     [EdiValue("X(35)", Path = "SG44/1", Mandatory = false)]
     public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
