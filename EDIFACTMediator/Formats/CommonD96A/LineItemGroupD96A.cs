@@ -27,7 +27,7 @@ public class LineItemGroupD96A
 
     public List<DateTimePeriodMessage> DateTimePeriods { get; set; } = new List<DateTimePeriodMessage>(); // DTM segment
 
-    public List<Package> Packages { get; set; } = new List<Package>(); // PAC segments (package details)
+    public List<PackageDetails> Packages { get; set; } = new List<PackageDetails>(); // PAC segments (package details)
 
     public List<PriceDetailsD96A> PriceDetails { get; set; } = new List<PriceDetailsD96A>(); // PRI segment
 

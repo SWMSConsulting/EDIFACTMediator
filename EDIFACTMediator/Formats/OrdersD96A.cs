@@ -793,83 +793,16 @@ public class SegmentGroup8
     public MonetaryAmountD96A MonetaryAmount { get; set; } // MOA segment
 }
 
-[EdiSegment, EdiPath("TDT")]
-public class DetailsOfTransport
-{
-    [EdiValue("X(3)", Path = "TDT/0", Mandatory = true)]
-    public string TransportStageQualifier { get; set; } // 8051
-
-    [EdiValue("X(17)", Path = "TDT/1", Mandatory = false)]
-    public string ConveyanceReferenceNumber { get; set; } // 8028
-
-    // C220 Composite
-    [EdiValue("X(3)", Path = "TDT/2/0", Mandatory = false)]
-    public string ModeOfTransportCoded { get; set; } // 8067
-
-    [EdiValue("X(17)", Path = "TDT/2/1", Mandatory = false)]
-    public string ModeOfTransport { get; set; } // 8066
-
-    // C228 Composite
-    [EdiValue("X(8)", Path = "TDT/3/0", Mandatory = false)]
-    public string TypeOfMeansOfTransportIdentification { get; set; } // 8179
-
-    [EdiValue("X(17)", Path = "TDT/3/1", Mandatory = false)]
-    public string TypeOfMeansOfTransport { get; set; } // 8178
-
-    // C040 Composite
-    [EdiValue("X(17)", Path = "TDT/4/0", Mandatory = false)]
-    public string CarrierIdentification { get; set; } // 3127
-
-    [EdiValue("X(3)", Path = "TDT/4/1", Mandatory = false)]
-    public string CarrierCodeListQualifier { get; set; } // 1131
-
-    [EdiValue("X(3)", Path = "TDT/4/2", Mandatory = false)]
-    public string CarrierCodeListResponsibleAgency { get; set; } // 3055
-
-    [EdiValue("X(35)", Path = "TDT/4/3", Mandatory = false)]
-    public string CarrierName { get; set; } // 3128
-
-    [EdiValue("X(3)", Path = "TDT/5", Mandatory = false)]
-    public string TransitDirectionCoded { get; set; } // 8101
-
-    // C401 Composite
-    [EdiValue("X(3)", Path = "TDT/6/0", Mandatory = true)]
-    public string ExcessTransportationReasonCoded { get; set; } // 8457
-
-    [EdiValue("X(3)", Path = "TDT/6/1", Mandatory = true)]
-    public string ExcessTransportationResponsibilityCoded { get; set; } // 8459
-
-    [EdiValue("X(17)", Path = "TDT/6/2", Mandatory = false)]
-    public string CustomerAuthorizationNumber { get; set; } // 7130
-
-    // C222 Composite
-    [EdiValue("X(9)", Path = "TDT/7/0", Mandatory = false)]
-    public string IdOfMeansOfTransportIdentification { get; set; } // 8213
-
-    [EdiValue("X(3)", Path = "TDT/7/1", Mandatory = false)]
-    public string MeansOfTransportCodeListQualifier { get; set; } // 1131
-
-    [EdiValue("X(3)", Path = "TDT/7/2", Mandatory = false)]
-    public string MeansOfTransportCodeListResponsibleAgency { get; set; } // 3055
-
-    [EdiValue("X(35)", Path = "TDT/7/3", Mandatory = false)]
-    public string IdOfTheMeansOfTransport { get; set; } // 8212
-
-    [EdiValue("X(3)", Path = "TDT/7/4", Mandatory = false)]
-    public string NationalityOfMeansOfTransportCoded { get; set; } // 8453
-
-    [EdiValue("X(3)", Path = "TDT/8", Mandatory = false)]
-    public string TransportOwnershipCoded { get; set; } // 8281
-}
-
+/*
 [EdiSegmentGroup("SG9", "TDT", "SG10")]
 public class SegmentGroup9
 {
-    [EdiValue("X(35)", Path = "SG9/0")] public DetailsOfTransport DetailsOfTransport { get; set; } // TDT segment
+    [EdiValue("X(35)", Path = "SG9/0")] public TransportDetails DetailsOfTransport { get; set; } // TDT segment
 
     [EdiValue("X(35)", Path = "SG9/1", Mandatory = false)]
     public SegmentGroup10 LocationDateTime { get; set; } // SG10 segment group
 }
+*/
 
 [EdiSegmentGroup("SG10", "LOC", "DTM")]
 public class SegmentGroup10
@@ -956,57 +889,6 @@ public class Measurements
     public string SurfaceLayerIndicatorCoded { get; set; } // 7383
 }
 
-[EdiSegment, EdiPath("PCI")]
-public class PackageIdentification
-{
-    [EdiValue("X(3)", Path = "PCI/0", Mandatory = false)]
-    public string MarkingInstructionsCoded { get; set; } // 4233
-
-    // C210 Composite
-    [EdiValue("X(35)", Path = "PCI/1/0", Mandatory = true)]
-    public string ShippingMarks1 { get; set; } // 7102
-
-    [EdiValue("X(35)", Path = "PCI/1/1", Mandatory = false)]
-    public string ShippingMarks2 { get; set; } // 7102
-
-    [EdiValue("X(35)", Path = "PCI/1/2", Mandatory = false)]
-    public string ShippingMarks3 { get; set; } // 7102
-
-    [EdiValue("X(35)", Path = "PCI/1/3", Mandatory = false)]
-    public string ShippingMarks4 { get; set; } // 7102
-
-    [EdiValue("X(35)", Path = "PCI/1/4", Mandatory = false)]
-    public string ShippingMarks5 { get; set; } // 7102
-
-    [EdiValue("X(35)", Path = "PCI/1/5", Mandatory = false)]
-    public string ShippingMarks6 { get; set; } // 7102
-
-    [EdiValue("X(35)", Path = "PCI/1/6", Mandatory = false)]
-    public string ShippingMarks7 { get; set; } // 7102
-
-    [EdiValue("X(35)", Path = "PCI/1/7", Mandatory = false)]
-    public string ShippingMarks8 { get; set; } // 7102
-
-    [EdiValue("X(35)", Path = "PCI/1/8", Mandatory = false)]
-    public string ShippingMarks9 { get; set; } // 7102
-
-    [EdiValue("X(35)", Path = "PCI/1/9", Mandatory = false)]
-    public string ShippingMarks10 { get; set; } // 7102
-
-    [EdiValue("X(3)", Path = "PCI/2", Mandatory = false)]
-    public string ContainerPackageStatusCoded { get; set; } // 8275
-
-    // C827 Composite
-    [EdiValue("X(3)", Path = "PCI/3/0", Mandatory = true)]
-    public string TypeOfMarkingCoded { get; set; } // 7511
-
-    [EdiValue("X(3)", Path = "PCI/3/1", Mandatory = false)]
-    public string CodeListQualifier { get; set; } // 1131
-
-    [EdiValue("X(3)", Path = "PCI/3/2", Mandatory = false)]
-    public string CodeListResponsibleAgency { get; set; } // 3055
-}
-
 [EdiSegment, EdiElement, EdiPath("GIN")]
 public class GoodsIdentityNumber
 {
@@ -1051,6 +933,7 @@ public class GoodsIdentityNumber
     public string IdentityNumber12 { get; set; } // 7402
 }
 
+/*
 [EdiSegmentGroup("SG13", "PCI", "RFF", "DTM", "GIN")]
 public class SegmentGroup13
 {
@@ -1070,7 +953,7 @@ public class SegmentGroup13
 [EdiSegmentGroup("SG12", "PAC", "MEA", "SG13")]
 public class SegmentGroup12
 {
-    [EdiValue("X(35)", Path = "SG12/0")] public Package Package { get; set; } // PAC segment
+    [EdiValue("X(35)", Path = "SG12/0")] public PackageDetails Package { get; set; } // PAC segment
 
     [EdiValue("X(35)", Path = "SG12/1", Mandatory = false)]
     public Measurements Measurements { get; set; } // MEA segment
@@ -1078,6 +961,7 @@ public class SegmentGroup12
     [EdiValue("X(35)", Path = "SG12/2", Mandatory = false)]
     public SegmentGroup13 PackageIdentificationGroup { get; set; } // SG13 segment group
 }
+*/
 
 [EdiSegment, EdiPath("EQD")]
 public class EquipmentDetails
@@ -1627,6 +1511,7 @@ public class SegmentGroup29
 }
 
 
+/*
 [EdiSegmentGroup("PCI")]
 public class SegmentGroup32
 {
@@ -1642,7 +1527,7 @@ public class SegmentGroup32
 [EdiSegmentGroup("PAC")]
 public class SegmentGroup30
 {
-    public Package Package { get; set; } // PAC segment
+    public PackageDetails Package { get; set; } // PAC segment
 
     public Measurements Measurements { get; set; } // MEA segment
 
@@ -1654,6 +1539,7 @@ public class SegmentGroup30
 
     public SegmentGroup32 SegmentGroup32 { get; set; } // SG32 segment group
 }
+*/
 
 [EdiSegmentGroup("LOC")]
 public class SegmentGroup33
@@ -1751,13 +1637,15 @@ public class SegmentGroup46
     public DateTimePeriodMessage DateTimePeriod { get; set; } // DTM segment
 }
 
+/*
 [EdiSegmentGroup("TDT")]
 public class SegmentGroup45
 {
-    public DetailsOfTransport DetailsOfTransport { get; set; } // TDT segment
+    public TransportDetails DetailsOfTransport { get; set; } // TDT segment
 
     public SegmentGroup46 SegmentGroup46 { get; set; } // SG46 segment group
 }
+*/
 
 [EdiSegmentGroup("TOD")]
 public class SegmentGroup47

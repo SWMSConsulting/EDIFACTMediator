@@ -197,7 +197,7 @@ public class Quantity
 }
 
 [EdiSegment, EdiPath("PAC")]
-public class Package
+public class PackageDetails
 {
     [EdiValue("9(8)", Path = "PAC/0", Mandatory = false)]
     public int NumberOfPackages { get; set; } // 7224
