@@ -1,8 +1,5 @@
 ﻿using EDIFACTMediator.Formats.CommonD96A;
-using EDIFACTMediator.Formats.InvoiceD96A;
-using EDIFACTMediator.Formats.OrderResponseD96A;
 using EDIFACTMediator.Formats.OrdersD96A;
-using EDIFACTMediator.Utils;
 using indice.Edi.Serialization;
 
 namespace EDIFACTMediator.Formats.DeliveryNoteD96A
@@ -43,11 +40,6 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
                     DateOfPreparation = DateTime.Now.ToString("yyyyMMdd"),
                     FormatQualifier = "102",
                 });
-
-                item.SectionControl = new SectionControl
-                {
-                    SectionIdentification = "S"
-                };
             }
 
             Trailer.InterchangeControl = "1";
@@ -72,8 +64,7 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
 
         public List<PackageGroup> Packages { get; set; } = new List<PackageGroup>(); // CPS groups (package details)
 
-        [EdiSegment(Mandatory = true)]
-        public SectionControl SectionControl { get; set; } = new SectionControl(); // UNS segment
+        public SectionControl? SectionControl { get; set; } = null; // UNS segment
 
         public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
 
