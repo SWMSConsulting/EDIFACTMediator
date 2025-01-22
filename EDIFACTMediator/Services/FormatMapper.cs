@@ -1,6 +1,12 @@
-﻿using EDIFACTMediator.Extensions;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using EDIFACTMediator.Extensions;
+using EDIFACTMediator.Formats;
 using EDIFACTMediator.PropertyMapper;
+using indice.Edi;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace EDIFACTMediator.Services;
 
@@ -9,25 +15,35 @@ public class FormatMapper: IFormatMapper
     public IList<Type> SourceFormats { get; internal set; } = new ObservableCollection<Type>();
     public IList<Type> TargetFormats { get; internal set; } = new ObservableCollection<Type>();
 
-    public FormatMapper RegisterSourceFormat(Type type)
+    public Dictionary<Type, SerializedFormat> SerializedFormats { get; internal set; } = new Dictionary<Type, SerializedFormat>();
+
+    public FormatMapper RegisterSourceFormat(Type type, SerializedFormat serializedFormat)
     {
+        SerializedFormats[type] = serializedFormat;
         SourceFormats.Add(type);
         return this;
     }
-    public FormatMapper RegisterSourceFormats(List<Type> types)
+    public FormatMapper RegisterSourceFormats(List<Tuple<Type, SerializedFormat>> types)
     {
-        types.ForEach(SourceFormats.Add);
+        types.ForEach(t => {
+            SerializedFormats[t.Item1] = t.Item2;
+            SourceFormats.Add(t.Item1);
+        });
         return this;
     }
 
-    public FormatMapper RegisterTargetFormat(Type t)
+    public FormatMapper RegisterTargetFormat(Type type, SerializedFormat serializedFormat)
     {
-        TargetFormats.Add(t);
+        SerializedFormats[type] = serializedFormat;
+        TargetFormats.Add(type);
         return this;
     }
-    public FormatMapper RegisterTargetFormats(List<Type> types)
+    public FormatMapper RegisterTargetFormats(List<Tuple<Type, SerializedFormat>> types)
     {
-        types.ForEach(TargetFormats.Add);
+        types.ForEach(t => {
+            SerializedFormats[t.Item1] = t.Item2;
+            TargetFormats.Add(t.Item1);
+        });
         return this;
     }
 
@@ -164,5 +180,149 @@ public class FormatMapper: IFormatMapper
         }
 
         return source;
+    }
+
+    public object? Deserialize(Type type, string content)
+    {
+        var format = SerializedFormats.GetValueOrDefault(type);
+
+        switch (format)
+        {
+            case SerializedFormat.Json:
+                return DeserializeJson(type, content);
+            case SerializedFormat.EdiFact:
+                return DeserializeEdiFact(type, content);
+            default:
+                return null;
+        }
+    }
+
+    public static object? DeserializeEdiFact(Type type, string content)
+    {
+        try
+        {
+            var grammar = EdiGrammar.NewEdiFact();
+
+            using var reader = new StringReader(content);
+            var result = new EdiSerializer().Deserialize(reader, grammar, type);
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed to parse EDI: {e.Message}");
+        }
+        return null;
+    }
+    public static object? DeserializeJson(Type type, string content)
+    {
+        try
+        {
+            var result = JsonConvert.DeserializeObject(content, type);
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed to parse JSON: {e.Message}");
+        }
+        return null;
+    }
+
+    public string Serialize(object? toSerialize)
+    {
+        if (toSerialize == null)
+        {
+            return string.Empty;
+        }
+
+        var type = toSerialize.GetType();
+        var format = SerializedFormats.GetValueOrDefault(type);
+
+        switch (format)
+        {
+            case SerializedFormat.Json:
+                return SerializeJson(toSerialize);
+            case SerializedFormat.EdiFact:
+                return SerializeEdiFact(toSerialize);
+            case SerializedFormat.Csv:
+                return SerializeCsv(toSerialize);
+            default:
+                Console.WriteLine($"Unknown format {format}");
+                return string.Empty;
+        }
+    }
+
+    public static string SerializeEdiFact(object toSerialize)
+    {
+        try
+        {
+            var type = toSerialize.GetType();
+            if (type.IsAssignableTo(typeof(IEdiFormat)))
+            {
+                (toSerialize as IEdiFormat)?.UpdateDerivedProperties();
+            }
+
+            var grammar = EdiGrammar.NewEdiFact();
+            using var textWriter = new StringWriter();
+            using var ediWriter = new EdiTextWriter(textWriter, grammar);
+            new EdiSerializer().Serialize(ediWriter, toSerialize);
+            return textWriter.ToString();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed to serialize EDI: {e.Message}");
+        }
+
+        return string.Empty;
+    }
+
+    public static string SerializeJson(object toSerialize)
+    {
+        try
+        {
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            return JsonConvert.SerializeObject(toSerialize, settings);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed to serialize JSON: {e.Message}");
+        }
+        return string.Empty;
+    }
+    public static string SerializeCsv(object toSerialize)
+    {
+        var type = toSerialize.GetType();
+        if (!type.IsAssignableTo(typeof(ICsvFormat)))
+        {
+            return string.Empty;
+        }
+
+        try
+        {
+            var csvObject = toSerialize as ICsvFormat;
+            var rows = csvObject?.Rows;
+            if (rows == null || rows.Count() <= 0)
+            {
+                return string.Empty;
+            }
+            var configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+                Delimiter = ";"
+            };
+
+            using var writer = new StringWriter();
+            using var csv = new CsvWriter(writer, configuration);
+            csv.WriteRecords(rows);
+            return writer.ToString();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed to serialize CSV: {e.Message}");
+        }
+        return string.Empty;
     }
 }
