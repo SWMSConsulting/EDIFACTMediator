@@ -19,5 +19,6 @@ public enum SerializedFormat
 {
     Json,
     EdiFact,
-    Csv
+    Csv,
+    Xml
 }

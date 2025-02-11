@@ -7,6 +7,7 @@ using indice.Edi;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Xml.Serialization;
 
 namespace EDIFACTMediator.Services;
 
@@ -192,6 +193,8 @@ public class FormatMapper: IFormatMapper
                 return DeserializeJson(type, content);
             case SerializedFormat.EdiFact:
                 return DeserializeEdiFact(type, content);
+            case SerializedFormat.Xml:
+                return DeserializeXml(type, content);
             default:
                 return null;
         }
@@ -213,6 +216,7 @@ public class FormatMapper: IFormatMapper
         }
         return null;
     }
+
     public static object? DeserializeJson(Type type, string content)
     {
         try
@@ -223,6 +227,22 @@ public class FormatMapper: IFormatMapper
         catch (Exception e)
         {
             Console.WriteLine($"Failed to parse JSON: {e.Message}");
+        }
+        return null;
+    }
+
+    public static object? DeserializeXml(Type type, string content)
+    {
+        try
+        {
+            var serializer = new XmlSerializer(type);
+            using var reader = new StringReader(content);
+            var result = serializer.Deserialize(reader);
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed to parse XML: {e.Message}");
         }
         return null;
     }
@@ -245,6 +265,8 @@ public class FormatMapper: IFormatMapper
                 return SerializeEdiFact(toSerialize);
             case SerializedFormat.Csv:
                 return SerializeCsv(toSerialize);
+            case SerializedFormat.Xml:
+                return SerializeXml(toSerialize);
             default:
                 Console.WriteLine($"Unknown format {format}");
                 return string.Empty;
@@ -322,6 +344,22 @@ public class FormatMapper: IFormatMapper
         catch (Exception e)
         {
             Console.WriteLine($"Failed to serialize CSV: {e.Message}");
+        }
+        return string.Empty;
+    }
+
+    public static string SerializeXml(object toSerialize)
+    {
+        try
+        {
+            var serializer = new XmlSerializer(toSerialize.GetType());
+            using var writer = new StringWriter();
+            serializer.Serialize(writer, toSerialize);
+            return writer.ToString();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed to serialize XML: {e.Message}");
         }
         return string.Empty;
     }
