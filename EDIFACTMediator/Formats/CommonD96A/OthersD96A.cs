@@ -124,6 +124,8 @@ public class ReferenceMessage
 
     [EdiValue("X(35)", Path = "RFF/0/3", Mandatory = false)]
     public string ReferenceVersionNumber { get; set; } // 4000
+
+    public List<DateTimePeriodMessage> DateTimes { get; set; } = new List<DateTimePeriodMessage>(); // DTM segments
 }
 
 [EdiElement, EdiPath("UNS")]
