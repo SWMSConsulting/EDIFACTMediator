@@ -33,7 +33,7 @@ public class InvoiceD96A : IEdiFormat
 
             item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
 
-            item.DateTimes.Add(new DateTimePeriodMessage
+            item.DateTimes.Insert(0, new DateTimePeriodMessage
             {
                 DateTimePeriodFunctionCode = "137",
                 DateOfPreparation = DateTime.Now.ToString("yyyyMMdd"),
@@ -69,6 +69,8 @@ public class Invoice
     public List<SegmentGroup8> PaymentTerms { get; set; } = new List<SegmentGroup8>(); // PAT segments
 
     public List<SegmentGroup6> Taxes { get; set; } = new List<SegmentGroup6>(); // TAX-MOA-LOC segments
+
+    public List<AllowanceOrCharge> AllowanceOrCharges { get; set; } = new List<AllowanceOrCharge>(); // ALC segments
 
     public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN+ groups (line items)
 

@@ -34,7 +34,7 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
 
                 item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
 
-                item.DateTimes.Add(new DateTimePeriodMessage
+                item.DateTimes.Insert(0, new DateTimePeriodMessage
                 {
                     DateTimePeriodFunctionCode = "137",
                     DateOfPreparation = DateTime.Now.ToString("yyyyMMdd"),

@@ -1184,6 +1184,8 @@ public class AllowanceOrCharge
 
     [EdiValue("X(35)", Path = "ALC/4/4", Mandatory = false)]
     public string SpecialService2 { get; set; } // 7160
+
+    public List<MonetaryAmountD96A> MonetaryAmounts { get; set; }  = new List<MonetaryAmountD96A>();
 }
 
 [EdiSegment, EdiPath("RTE")]

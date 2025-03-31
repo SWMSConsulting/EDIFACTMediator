@@ -1,4 +1,5 @@
-﻿using indice.Edi.Serialization;
+﻿using EDIFACTMediator.Formats.OrdersD96A;
+using indice.Edi.Serialization;
 
 namespace EDIFACTMediator.Formats.CommonD96A;
 
@@ -10,4 +11,5 @@ public class MonetaryAmountD96A
 
     [EdiValue("9(18)", Path = "MOA/0/1", Mandatory = true)]
     public decimal Amount { get; set; } // Amount value
+    public List<TaxDetails> TaxDetails { get; set; } = new List<TaxDetails>(); // Tax details
 }
