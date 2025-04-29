@@ -29,11 +29,11 @@ public class LineItemGroupD96A
 
     public List<PackageDetails> Packages { get; set; } = new List<PackageDetails>(); // PAC segments (package details)
 
+    public List<MonetaryAmountD96A> MonetaryAmounts { get; set; } = new List<MonetaryAmountD96A>(); // MOA segment
+
     public List<PriceDetailsD96A> PriceDetails { get; set; } = new List<PriceDetailsD96A>(); // PRI segment
 
     public List<TaxDetails> TaxDetails { get; set; } = new List<TaxDetails>(); // TAX segment
-
-    public List<MonetaryAmountD96A> MonetaryAmounts { get; set; } = new List<MonetaryAmountD96A>(); // MOA segment
 
     public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>();
 }
