@@ -33,12 +33,15 @@ public class InvoiceD96A : IEdiFormat
 
             item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
 
-            item.DateTimes.Add(new DateTimePeriodMessage
+            if(item.DateTimes.FirstOrDefault(d => d.DateTimePeriodFunctionCode == "137") == null)
             {
-                DateTimePeriodFunctionCode = "137",
-                DateOfPreparation = DateTime.Now.ToString("yyyyMMdd"),
-                FormatQualifier = "102",
-            });
+                item.DateTimes.Add(new DateTimePeriodMessage
+                {
+                    DateTimePeriodFunctionCode = "137",
+                    DateOfPreparation = DateTime.Now.ToString("yyyyMMdd"),
+                    FormatQualifier = "102",
+                });
+            }
 
             item.SectionControl = new SectionControl
             {

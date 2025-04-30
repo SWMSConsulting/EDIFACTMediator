@@ -34,12 +34,15 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
 
                 item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
 
-                item.DateTimes.Add(new DateTimePeriodMessage
+                if (item.DateTimes.FirstOrDefault(d => d.DateTimePeriodFunctionCode == "137") == null)
                 {
-                    DateTimePeriodFunctionCode = "137",
-                    DateOfPreparation = DateTime.Now.ToString("yyyyMMdd"),
-                    FormatQualifier = "102",
-                });
+                    item.DateTimes.Add(new DateTimePeriodMessage
+                    {
+                        DateTimePeriodFunctionCode = "137",
+                        DateOfPreparation = DateTime.Now.ToString("yyyyMMdd"),
+                        FormatQualifier = "102",
+                    });
+                }
             }
 
             Trailer.InterchangeControl = "1";
