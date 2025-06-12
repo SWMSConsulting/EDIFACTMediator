@@ -36,4 +36,6 @@ public class LineItemGroupD96A
     public List<TaxDetails> TaxDetails { get; set; } = new List<TaxDetails>(); // TAX segment
 
     public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>();
+
+    public List<PartySegment> Parties { get; set; } = new List<PartySegment>(); // NAD segments
 }

@@ -71,8 +71,6 @@ public class Invoice
 
     public List<SegmentGroup8> PaymentTerms { get; set; } = new List<SegmentGroup8>(); // PAT segments
 
-    public List<SegmentGroup6> Taxes { get; set; } = new List<SegmentGroup6>(); // TAX-MOA-LOC segments
-
     public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN+ groups (line items)
 
     [EdiSegment(Mandatory = true)]
@@ -81,6 +79,8 @@ public class Invoice
     public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
 
     public List<MonetaryAmountD96A> MonetaryAmounts { get; set; } = new List<MonetaryAmountD96A>(); // MOA segment
+
+    public List<TaxDetails> TaxDetails { get; set; } = new List<TaxDetails>(); // TAX+MOA+LOC segments
 
     public MessageTrailer MessageTrailer { get; set; } = new MessageTrailer(); // UNT segment
 }

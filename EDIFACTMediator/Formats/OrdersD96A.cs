@@ -633,6 +633,8 @@ public class TaxDetails
 
     [EdiValue("X(20)", Path = "TAX/6", Mandatory = false)]
     public string PartyTaxIdentificationNumber { get; set; } // 3446
+
+    public MonetaryAmountD96A? MonetaryAmount { get; set; } = null;
 }
 
 /*
