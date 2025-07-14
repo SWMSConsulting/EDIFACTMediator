@@ -25,12 +25,6 @@ public class InvoiceD96A : IEdiFormat
             item.MessageHeader.MessageTypeIdentifier = "INVOIC";
             item.MessageHeader.MessageReferenceNumber = "1";
 
-            item.ControlTotal = new ControlTotal
-            {
-                ControlQualifier = "2",
-                ControlValue = item.LineItems.Count,
-            };
-
             item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
 
             if(item.DateTimes.FirstOrDefault(d => d.DateTimePeriodFunctionCode == "137") == null)
@@ -76,7 +70,7 @@ public class Invoice
     [EdiSegment(Mandatory = true)]
     public SectionControl SectionControl { get; set; } = new SectionControl(); // UNS segment
 
-    public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
+    public ControlTotal? ControlTotal { get; set; } = null; // CNT segment
 
     public List<MonetaryAmountD96A> MonetaryAmounts { get; set; } = new List<MonetaryAmountD96A>(); // MOA segment
 
