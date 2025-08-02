@@ -2,7 +2,7 @@
 
 public class GetFirstOrDefaultMapper : IPropertyMapper
 {
-    public IEnumerable<string> RequiredParameters => new List<string> { "FilterProperty", "FilterValue", "PropertyName" };
+    public IEnumerable<string> RequiredParameters => new List<string> { "FilterProperty", "FilterValue", "PropertyName", "ReturnValueAsString" };
     public Dictionary<string, string> DefaultValues => new Dictionary<string, string>();
 
     public object? Map(object? source, Dictionary<string, string> parameters, object? sourceBase)
@@ -21,6 +21,7 @@ public class GetFirstOrDefaultMapper : IPropertyMapper
         var filterPropertyName = parameters.GetValueOrDefault("FilterProperty");
         var filterValue = parameters.GetValueOrDefault("FilterValue");
         var propertyName = parameters.GetValueOrDefault("PropertyName");
+        var returnValueAsString = parameters.GetValueOrDefault("ReturnValueAsString") == "true";
 
         if (string.IsNullOrEmpty(filterPropertyName) || string.IsNullOrEmpty(filterValue))
         {
@@ -47,6 +48,18 @@ public class GetFirstOrDefaultMapper : IPropertyMapper
         }
 
         var property = first.GetType().GetProperty(propertyName);
-        return property?.GetValue(first);
+        var value = property?.GetValue(first);
+
+        if (value == null)
+        {
+            return null;
+        }
+
+        if (returnValueAsString)
+        {
+            return value.ToString();
+        }
+
+        return value;
     }
 }
