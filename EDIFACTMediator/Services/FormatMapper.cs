@@ -303,7 +303,8 @@ public class FormatMapper: IFormatMapper
         {
             var settings = new JsonSerializerSettings
             {
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Newtonsoft.Json.Formatting.Indented,
             };
             return JsonConvert.SerializeObject(toSerialize, settings);
         }
