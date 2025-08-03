@@ -25,6 +25,8 @@ public class LineItemGroupD96A
 
     public List<Quantity> Quantities { get; set; } = new List<Quantity>(); // QTY segments
 
+    public List<FreeTextMessage> FreeTexts { get; set; } = new List<FreeTextMessage>(); // FTX segments
+
     public List<DateTimePeriodMessage> DateTimePeriods { get; set; } = new List<DateTimePeriodMessage>(); // DTM segment
 
     public List<PackageDetails> Packages { get; set; } = new List<PackageDetails>(); // PAC segments (package details)
