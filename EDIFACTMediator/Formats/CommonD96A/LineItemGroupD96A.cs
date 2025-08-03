@@ -35,9 +35,9 @@ public class LineItemGroupD96A
 
     public List<PriceDetailsD96A> PriceDetails { get; set; } = new List<PriceDetailsD96A>(); // PRI segment
 
-    public List<TaxDetails> TaxDetails { get; set; } = new List<TaxDetails>(); // TAX segment
-
     public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>();
+
+    public List<TaxDetails> TaxDetails { get; set; } = new List<TaxDetails>(); // TAX segment
 
     public List<PartySegment> Parties { get; set; } = new List<PartySegment>(); // NAD segments
 }
