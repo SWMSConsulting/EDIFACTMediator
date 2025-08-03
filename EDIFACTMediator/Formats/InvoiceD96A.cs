@@ -62,6 +62,8 @@ public class Invoice
 
     public List<DateTimePeriodMessage> DateTimes { get; set; } = new List<DateTimePeriodMessage>(); // DTM segments
 
+    public List<FreeTextMessage> FreeTexts { get; set; } = new List<FreeTextMessage>(); // FTX segments
+
     public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>(); // RFF segments
 
     public List<PartySegment> Parties { get; set; } = new List<PartySegment>(); // NAD segments
