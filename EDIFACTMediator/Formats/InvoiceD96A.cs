@@ -41,6 +41,11 @@ public class InvoiceD96A : IEdiFormat
             {
                 SectionIdentification = "S"
             };
+
+            if(item.ControlTotal != null)
+            {
+                item.ControlTotal.ControlValue = item.LineItems.Count;
+            }
         }
 
         Trailer.InterchangeControl = "1";
