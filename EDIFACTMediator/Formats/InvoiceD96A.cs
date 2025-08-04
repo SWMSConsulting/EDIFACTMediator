@@ -46,6 +46,17 @@ public class InvoiceD96A : IEdiFormat
             {
                 item.ControlTotal.ControlValue = item.LineItems.Count;
             }
+
+            var minItemNum = item.LineItems.Min(i => i.LineItemNumber);
+            if (minItemNum == null || minItemNum < 1)
+            {
+                var itemNumber = 1;
+                foreach (var lineItem in item.LineItems.OrderBy(i => i.LineItemNumber))
+                {
+                    lineItem.LineItemNumber = itemNumber;
+                    itemNumber++;
+                }
+            }
         }
 
         Trailer.InterchangeControl = "1";
