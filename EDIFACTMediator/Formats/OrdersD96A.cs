@@ -512,19 +512,19 @@ public class PartySegment
 
     // C080 Composite
     [EdiValue("X(35)", Path = "NAD/3/0", Mandatory = false)]
-    public string PartyName1 { get; set; } // 3036
+    public string? PartyName1 { get; set; } // 3036
 
     [EdiValue("X(35)", Path = "NAD/3/1", Mandatory = false)]
-    public string PartyName2 { get; set; } // 3036
+    public string? PartyName2 { get; set; } // 3036
 
     [EdiValue("X(35)", Path = "NAD/3/2", Mandatory = false)]
-    public string PartyName3 { get; set; } // 3036
+    public string? PartyName3 { get; set; } // 3036
 
     [EdiValue("X(35)", Path = "NAD/3/3", Mandatory = false)]
-    public string PartyName4 { get; set; } // 3036
+    public string? PartyName4 { get; set; } // 3036
 
     [EdiValue("X(35)", Path = "NAD/3/4", Mandatory = false)]
-    public string PartyName5 { get; set; } // 3036
+    public string? PartyName5 { get; set; } // 3036
 
     [EdiValue("X(3)", Path = "NAD/3/5", Mandatory = false)]
     public string PartyNameFormatCoded { get; set; } // 3045
