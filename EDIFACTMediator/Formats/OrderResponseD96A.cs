@@ -45,6 +45,17 @@ public class OrderResponseD96A : IEdiFormat
             item.SectionControl = new SectionControl { 
                 SectionIdentification = "S"
             };
+
+            var minItemNum = item.LineItems.Min(i => i.LineItemNumber);
+            if (minItemNum == null || minItemNum < 1)
+            {
+                var itemNumber = 1;
+                foreach (var lineItem in item.LineItems.OrderBy(i => i.LineItemNumber))
+                {
+                    lineItem.LineItemNumber = itemNumber;
+                    itemNumber++;
+                }
+            }
         }
 
         Trailer.InterchangeControl = "1";

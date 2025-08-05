@@ -43,6 +43,19 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
                         FormatQualifier = "102",
                     });
                 }
+                foreach (var package in item.Packages)
+                {
+                    var minItemNum = package.LineItems.Min(i => i.LineItemNumber);
+                    if (minItemNum == null || minItemNum < 1)
+                    {
+                        var itemNumber = 1;
+                        foreach (var lineItem in package.LineItems.OrderBy(i => i.LineItemNumber))
+                        {
+                            lineItem.LineItemNumber = itemNumber;
+                            itemNumber++;
+                        }
+                    }
+                }
             }
 
             Trailer.InterchangeControl = "1";
