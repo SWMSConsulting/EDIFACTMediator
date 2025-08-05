@@ -5,7 +5,7 @@ namespace EDIFACTMediator.Formats.CommonD96A;
 [EdiSegmentGroup("LIN", SequenceEnd = "UNS")]
 public class LineItemGroupD96A
 {
-    [EdiValue("9(6)", Path = "LIN/0", Mandatory = false)]
+    [EdiValue("9(1)", Path = "LIN/0", Mandatory = false)]
     public int? LineItemNumber { get; set; } // 1082
 
     [EdiValue("X(3)", Path = "LIN/1", Mandatory = false)]
