@@ -85,6 +85,8 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
 
         public List<PartySegment> Parties { get; set; } = new List<PartySegment>(); // NAD segments 
 
+        public List<TermsOfDeliveryOrTransport> TermsOfDeliveryOrTransport { get; set; } = new List<TermsOfDeliveryOrTransport>(); // TOD segments
+        
         public List<TransportDetails> TransportDetails { get; set; } = new List<TransportDetails>(); // TDT segment group
 
         public List<PackageGroup> Packages { get; set; } = new List<PackageGroup>(); // CPS groups (package details)
