@@ -119,7 +119,7 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
     [EdiSegmentGroup("CPS", SequenceEnd = "UNS")]
     public class PackageGroup
     {
-        [EdiValue("9(6)", Path = "CPS/0", Mandatory = true)]
+        [EdiValue("9(1)", Path = "CPS/0", Mandatory = true)]
         public int? HierarchicalIdNumber { get; set; } // 7164
 
         [EdiValue("9(6)", Path = "CPS/1", Mandatory = false)]
