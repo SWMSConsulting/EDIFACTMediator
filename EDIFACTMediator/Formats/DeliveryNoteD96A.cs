@@ -56,6 +56,11 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
                         }
                     }
                 }
+
+                foreach (var party in item.Parties)
+                {
+                    party.UpdateDerivedProperties();
+                }
             }
 
             Trailer.InterchangeControl = "1";

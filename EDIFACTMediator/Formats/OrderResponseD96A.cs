@@ -56,6 +56,11 @@ public class OrderResponseD96A : IEdiFormat
                     itemNumber++;
                 }
             }
+
+            foreach (var party in item.Parties)
+            {
+                party.UpdateDerivedProperties();
+            }
         }
 
         Trailer.InterchangeControl = "1";

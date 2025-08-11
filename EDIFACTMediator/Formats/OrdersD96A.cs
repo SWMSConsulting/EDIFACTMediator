@@ -492,7 +492,7 @@ public class PartySegment
     public string CodeListQualifier { get; set; } // 1131
 
     [EdiValue("X(3)", Path = "NAD/1/2", Mandatory = false)]
-    public string CodeListResponsibleAgency { get; set; } = "9";// 3055
+    public string CodeListResponsibleAgency { get; set; } // 3055
 
     // C058 Composite
     [EdiValue("X(35)", Path = "NAD/2/0", Mandatory = false)]
@@ -572,6 +572,13 @@ public class PartySegment
 
     public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>(); // RFF segments
 
+    public void UpdateDerivedProperties()
+    {
+        if (!string.IsNullOrEmpty(PartyIdIdentification))
+        {
+            CodeListResponsibleAgency = CodeListResponsibleAgency ?? "9"; // Default to "9" if not set
+        }
+    }
 }
 
 [EdiSegment, EdiPath("TAX")]
