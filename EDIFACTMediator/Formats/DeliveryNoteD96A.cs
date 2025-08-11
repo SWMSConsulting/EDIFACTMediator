@@ -52,6 +52,10 @@ namespace EDIFACTMediator.Formats.DeliveryNoteD96A
                         foreach (var lineItem in package.LineItems.OrderBy(i => i.LineItemNumber))
                         {
                             lineItem.LineItemNumber = itemNumber;
+                            var reference = lineItem.References.FirstOrDefault(r => r.ReferenceQualifier == "LI");
+                            if (reference != null) {
+                                reference.ReferenceNumber = itemNumber.ToString();
+                            }
                             itemNumber++;
                         }
                     }
