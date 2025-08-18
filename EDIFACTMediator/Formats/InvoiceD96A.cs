@@ -93,6 +93,8 @@ public class Invoice
 
     public List<SegmentGroup8> PaymentTerms { get; set; } = new List<SegmentGroup8>(); // PAT segments
 
+    public List<AllowanceOrChargeInformationGroup> AllowanceOrCharges { get; set; } = new List<AllowanceOrChargeInformationGroup>(); 
+
     public List<LineItemGroupD96A> LineItems { get; set; } = new List<LineItemGroupD96A>(); // LIN+ groups (line items)
 
     [EdiSegment(Mandatory = true)]
