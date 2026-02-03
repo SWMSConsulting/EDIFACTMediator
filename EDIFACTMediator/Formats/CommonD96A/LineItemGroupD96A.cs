@@ -40,4 +40,6 @@ public class LineItemGroupD96A
     public List<TaxDetails> TaxDetails { get; set; } = new List<TaxDetails>(); // TAX segment
 
     public List<PartySegment> Parties { get; set; } = new List<PartySegment>(); // NAD segments
+    public List<SchedulingConditionsGroupD96A> SchedulingConditions { get; set; }
+    = new List<SchedulingConditionsGroupD96A>(); // SG51
 }
