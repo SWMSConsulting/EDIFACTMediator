@@ -572,6 +572,10 @@ public class PartySegment
 
     public List<ReferenceMessage> References { get; set; } = new List<ReferenceMessage>(); // RFF segments
 
+    public ContactInformation ContactInformation { get; set; } // CTA segment
+
+    public List<CommunicationContact> CommunicationContact { get; set; } // COM segment
+
     public void UpdateDerivedProperties()
     {
         if (!string.IsNullOrEmpty(PartyIdIdentification))
