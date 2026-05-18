@@ -1,5 +1,4 @@
 ﻿using EDIFACTMediator.Formats.CommonD96A;
-using EDIFACTMediator.Utils;
 using indice.Edi.Serialization;
 
 namespace EDIFACTMediator.Formats.OrdersD96A;
@@ -43,7 +42,54 @@ public class OrdersD96A : IEdiFormat
 
     public void UpdateDerivedProperties()
     {
-        throw new NotImplementedException();
+
+        Header.ControlRef = "1";
+        Header.SyntaxIdentifier = "UNOC";
+        Header.SyntaxVersion = 3;
+
+        Header.DateOfPreparation = DateTime.Now;
+
+        foreach (var item in Orders)
+        {
+            item.MessageHeader.MessageTypeIdentifier = "ORDERS";
+            item.MessageHeader.MessageReferenceNumber = "1";
+
+            item.MessageTrailer.MessageReferenceNumber = item.MessageHeader.MessageReferenceNumber;
+
+            item.SectionControl = new SectionControl
+            {
+                SectionIdentification = "S"
+            };
+
+            if (item.ControlTotal != null)
+            {
+                item.ControlTotal.ControlValue = item.LineItems.Count;
+            }
+
+            var minItemNum = item.LineItems.Min(i => i.LineItemNumber);
+            if (minItemNum == null || minItemNum < 1)
+            {
+                var itemNumber = 1;
+                foreach (var lineItem in item.LineItems.OrderBy(i => i.LineItemNumber))
+                {
+                    lineItem.LineItemNumber = itemNumber;
+                    var reference = lineItem.References.FirstOrDefault(r => r.ReferenceQualifier == "LI");
+                    if (reference != null)
+                    {
+                        reference.ReferenceNumber = itemNumber.ToString();
+                    }
+                    itemNumber++;
+                }
+            }
+
+            foreach (var party in item.Parties)
+            {
+                party.UpdateDerivedProperties();
+            }
+        }
+
+        Trailer.InterchangeControl = "1";
+        Trailer.InterchangeControlCount = Orders.Count;
     }
 }
 
@@ -78,7 +124,7 @@ public class Order
     [EdiSegment(Mandatory = true)]
     public SectionControl SectionControl { get; set; } = new SectionControl(); // UNS segment
     public ControlTotal ControlTotal { get; set; } = new ControlTotal(); // CNT segment
-
+    public MessageTrailer MessageTrailer { get; set; } = new MessageTrailer(); // UNT segment
 
     //public List<SegmentGroup1> References { get; set; } = new List<SegmentGroup1>(); // RFF-DTM segment group
 
