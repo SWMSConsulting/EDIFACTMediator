@@ -15,7 +15,9 @@ public static class TypeExtensions
 
     public static bool IsListType(this Type type)
     {
-        return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
+        return type.IsGenericType &&
+            (type.GetGenericTypeDefinition() == typeof(List<>) ||
+             type.GetGenericTypeDefinition() == typeof(IEnumerable<>));
     }
 
     public static bool IsComplexType(this Type type)
@@ -25,6 +27,6 @@ public static class TypeExtensions
 
     public static bool IsSimpleType(this Type type)
     {
-        return type.IsPrimitive || type == typeof(string) || type == typeof(DateTime);
+        return type.IsPrimitive || type == typeof(string) || type == typeof(DateTime) || type == typeof(DateTimeOffset);
     }
 }
