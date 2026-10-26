@@ -7,6 +7,7 @@ using indice.Edi;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Reflection;
 using System.Xml.Serialization;
 
 namespace EDIFACTMediator.Services;
@@ -185,7 +186,11 @@ public class FormatMapper: IFormatMapper
 
     public object? Deserialize(Type type, string content)
     {
-        var format = SerializedFormats.GetValueOrDefault(type);
+        if (!SerializedFormats.TryGetValue(type, out var format))
+        {
+            Console.WriteLine($"No serialized format registered for {type}.");
+            return null;
+        }
 
         switch (format)
         {
@@ -193,10 +198,38 @@ public class FormatMapper: IFormatMapper
                 return DeserializeJson(type, content);
             case SerializedFormat.EdiFact:
                 return DeserializeEdiFact(type, content);
+            case SerializedFormat.Csv:
+                return DeserializeCsv(type, content);
             case SerializedFormat.Xml:
                 return DeserializeXml(type, content);
             default:
                 return null;
+        }
+    }
+
+    private static object? DeserializeCsv(Type type, string content)
+    {
+        var deserializer = type.GetMethod(
+            "Deserialize",
+            BindingFlags.Public | BindingFlags.Static,
+            binder: null,
+            types: new[] { typeof(string) },
+            modifiers: null);
+
+        if (deserializer == null || !type.IsAssignableFrom(deserializer.ReturnType))
+        {
+            Console.WriteLine($"No public static {type.Name}.Deserialize(string) method found for CSV.");
+            return null;
+        }
+
+        try
+        {
+            return deserializer.Invoke(null, new object[] { content });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed to parse CSV: {e.InnerException?.Message ?? e.Message}");
+            return null;
         }
     }
 
@@ -255,7 +288,11 @@ public class FormatMapper: IFormatMapper
         }
 
         var type = toSerialize.GetType();
-        var format = SerializedFormats.GetValueOrDefault(type);
+        if (!SerializedFormats.TryGetValue(type, out var format))
+        {
+            Console.WriteLine($"No serialized format registered for {type}.");
+            return string.Empty;
+        }
 
         switch (format)
         {
@@ -317,15 +354,27 @@ public class FormatMapper: IFormatMapper
     public static string SerializeCsv(object toSerialize)
     {
         var type = toSerialize.GetType();
-        if (!type.IsAssignableTo(typeof(ICsvFormat)))
-        {
-            return string.Empty;
-        }
-
         try
         {
-            var csvObject = toSerialize as ICsvFormat;
-            var rows = csvObject?.Rows;
+            if (toSerialize is not ICsvFormat csvFormat)
+            {
+                var serializer = type.GetMethod(
+                    "Serialize",
+                    BindingFlags.Public | BindingFlags.Instance,
+                    binder: null,
+                    types: Type.EmptyTypes,
+                    modifiers: null);
+
+                if (serializer == null || serializer.ReturnType != typeof(string))
+                {
+                    Console.WriteLine($"No public {type.Name}.Serialize() method found for CSV.");
+                    return string.Empty;
+                }
+
+                return serializer.Invoke(toSerialize, null) as string ?? string.Empty;
+            }
+
+            var rows = csvFormat.Rows;
             if (rows == null || rows.Count() <= 0)
             {
                 return string.Empty;
