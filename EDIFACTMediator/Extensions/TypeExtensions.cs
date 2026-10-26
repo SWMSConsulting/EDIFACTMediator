@@ -27,6 +27,7 @@ public static class TypeExtensions
 
     public static bool IsSimpleType(this Type type)
     {
-        return type.IsPrimitive || type == typeof(string) || type == typeof(DateTime) || type == typeof(DateTimeOffset);
+        return Nullable.GetUnderlyingType(type) != null ||
+            type.IsPrimitive || type == typeof(string) || type == typeof(DateTime) || type == typeof(DateTimeOffset);
     }
 }
