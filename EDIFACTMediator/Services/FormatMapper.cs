@@ -135,7 +135,8 @@ public class FormatMapper: IFormatMapper
             var instance = Activator.CreateInstance(targetProperty.PropertyType);
             targetProperty.SetValue(target, instance);
 
-            Task.WaitAll(mapping.SubMappings.Select(m => MapProperty(source, instance, m, sourceBase)).ToArray());
+            var subSource = sourceValue ?? source;
+            Task.WaitAll(mapping.SubMappings.Select(m => MapProperty(subSource, instance, m, sourceBase)).ToArray());
 
             return;
         }
